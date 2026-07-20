@@ -1,6 +1,6 @@
 body {
     font-family: monospace;
-    background-color: dimgray;
+    background-color: lightgray;
 }
 
 h1 {
@@ -9,9 +9,23 @@ h1 {
     color: darkolivegreen;
 }
 
+#logo {
+    margin-left: auto;
+    margin-right: 55px;
+    margin-top: -110px;
+    width: 100px;
+    height: 100px;
+}
+
+#logo-img {
+    width: 100px;
+    height: 100px;
+    padding: 0;
+}
+
 #main {
     margin-left: 25px;
-    margin-top: 15px;
+    margin-top: 25px;
     width: 770px;
     background-color: #0c100b; /* Dark off-black green */
     color: #33ff33;            /* Classic P1 phosphor green */
