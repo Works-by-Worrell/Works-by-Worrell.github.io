@@ -1,48 +1,154 @@
-body {
-    font-family: monospace;
-    background-color: lightgray;
+:root {
+    --bg-color: #0d0d12;
+    --card-bg: rgba(25, 25, 35, 0.4);
+    --text-main: #f0f0f5;
+    --text-muted: #9ca3af;
+    --accent: #5e6ad2;
+    --accent-hover: #7b85e0;
 }
 
-h1 {
-    font-size: 32pt;
-    text-align: center;
-    color: darkolivegreen;
-}
-
-#logo {
-    margin-left: auto;
-    margin-right: 55px;
-    margin-top: -110px;
-    width: 100px;
-    height: 100px;
-}
-
-#logo-img {
-    width: 100px;
-    height: 100px;
+* {
+    box-sizing: border-box;
+    margin: 0;
     padding: 0;
 }
 
-#main {
-    margin-left: 25px;
-    margin-top: 25px;
-    width: 770px;
-    background-color: #0c100b; /* Dark off-black green */
-    color: #33ff33;            /* Classic P1 phosphor green */
-    font-family: 'Courier New', Courier, monospace;
-    padding: 20px;
-    /* Phosphor glow effect */
-    text-shadow: 0 0 5px rgba(51, 255, 51, 0.55),0 0 10px rgba(51, 255, 51, 0.3);
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
-/* Optional styling for dim/muted elements */
-#main .dim {
-    color: #008800;
-    text-shadow: 0 0 2px rgba(0, 136, 0, 0.3);
+.background-effects {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
 }
 
-b {
-    font-weight: bolder;
-    font-size: 11pt;
-    color: green
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.15;
+    animation: float 10s infinite ease-in-out alternate;
+}
+
+.orb-1 {
+    width: 40vw;
+    height: 40vw;
+    background: #5e6ad2;
+    top: -10%;
+    left: -10%;
+}
+
+.orb-2 {
+    width: 30vw;
+    height: 30vw;
+    background: #25a55f;
+    bottom: -10%;
+    right: -10%;
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(30px, 50px); }
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.glass-effect {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.3));
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--accent);
+    font-size: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 2rem;
+}
+
+.bio {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 2.5rem;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.link-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.github-btn {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.github-btn:hover {
+    background-color: #e5e5e5;
+    transform: translateY(-2px);
 }
