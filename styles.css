@@ -497,17 +497,6 @@ sup a:hover {
     padding: 0 0.25rem;
 }
 
-@media (max-width: 640px) {
-    .equation-pipeline {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .equation-op {
-        text-align: center;
-        padding: 0.25rem 0;
-    }
-}
-
 .article-content ul, .article-content ol {
     margin-bottom: 1.5rem;
     padding-left: 1.5rem;
@@ -589,4 +578,72 @@ sup a:hover {
     background: rgba(156, 163, 175, 0.1);
     border-color: rgba(156, 163, 175, 0.2);
     color: var(--text-muted);
+}
+
+/* Mobile Responsive Table Transformation (< 680px) */
+@media (max-width: 680px) {
+    .glass-effect.article-glass {
+        padding: 1.75rem 1.25rem;
+    }
+    
+    .equation-pipeline {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .equation-op {
+        text-align: center;
+        padding: 0.25rem 0;
+    }
+
+    /* Transform Table to Stacked Cards */
+    .article-content table, 
+    .article-content tbody, 
+    .article-content tr, 
+    .article-content td {
+        display: block;
+        width: 100%;
+    }
+
+    .article-content thead {
+        display: none; /* Hide header row on mobile */
+    }
+
+    .article-content tr {
+        background: rgba(20, 20, 32, 0.6);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        padding: 1rem 1.25rem;
+    }
+
+    .article-content td {
+        border: none;
+        padding: 0.4rem 0;
+        background: transparent;
+    }
+
+    .article-content td:nth-child(1) {
+        display: none; /* Hide index number on card header */
+    }
+
+    .article-content td:nth-child(2) {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 0.3rem;
+    }
+
+    .article-content td:nth-child(3) {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .article-content td:nth-child(4) {
+        border-top: 1px dashed rgba(255, 255, 255, 0.08);
+        padding-top: 0.75rem;
+        display: flex;
+        justify-content: flex-end;
+    }
 }
