@@ -47,12 +47,13 @@ To enforce Principle 1, autonomous architectures must guarantee **Frictionless O
 |                                                                   |
 |   [ GATE: AuthN / AuthZ (Legal Check-In & Repo Access) ]          |
 |                                 |                                 |
-|                                 v  Single Command: ./agy-start.sh |
+|                                 v  Directed Install Script        |
 |   +-----------------------------------------------------------+   |
 |   | GREETERS: AUTOMATED DEV CONTAINER & AGENT BOOTSTRAP       |   |
+|   | - Two-Syllable Execution Command: wbw-daemon               |   |
 |   | - Self-provisioning container sandbox (Zero VDI hell)    |   |
 |   | - Agent-validated README & live environment checks        |   |
-|   | - AI pairing assistant for codebase architecture navigation|   |
+|   | - AI pairing assistant for codebase navigation            |   |
 |   +-----------------------------------------------------------+   |
 |                                 |                                 |
 |                                 v                                 |
@@ -62,7 +63,7 @@ To enforce Principle 1, autonomous architectures must guarantee **Frictionless O
 
 ### The Three Rules of Zero-Gatekeeper Architecture:
 
-1. **The Two-Syllable Gate (`wbw-daemon` / `agy-start.sh`):** Once authenticated, onboarding must never require executing 40 manual setup steps or deciphering stale Confluence wikis. Onboarding must be a single, self-healing command. One script provisions the container, validates dependencies, mocks external services, and drops the developer directly into a working state.
+1. **The Two-Syllable Control Plane (`wbw-daemon`):** Once authenticated, onboarding must never require executing 40 manual setup steps or deciphering stale Confluence wikis. Onboarding begins with a single directed installation script, initializing an easy-to-remember two-syllable daemon control plane (`wbw-daemon`). One command provisions the container, validates dependencies, mocks external services, and drops the developer directly into a working state.
 2. **AI Pairing as the Democratic Equalizer:** Autonomous agent swarms act as the master mentor that self-taught engineers never had. An AI agent doesn't mock junior questions, hide tribal knowledge, or posture. It explains legacy monoliths, maps hidden class dependencies, and guides first-time contributors safely.
 3. **Fearless Refactoring via Guarded Sandboxes:** When local environments are isolated in reproducible containers backed by automated test suites, newcomers can refactor code without fear of blowing up their machine or breaking unrelated monolith subsystems.
 
@@ -76,7 +77,7 @@ Translating Radical Inclusion into enterprise architecture requires three concre
 Destroy the "works on my machine" paradigm. Standardize all development environments using containerized definitions (`DevContainers`, `Docker Compose`, or `Nix`). A principal architect's environment and a Day 1 intern's environment must be bit-for-bit identical.
 
 ### B. Living, Agent-Validated Documentation
-Documentation rots the moment humans abandon it. Autonomous agents must validate onboarding scripts on every CI run. If `./agy-start.sh` fails on a fresh container, the build panics. Documentation is executable code.
+Documentation rots the moment humans abandon it. Autonomous agents must validate onboarding scripts on every CI run. If `wbw-daemon` bootstrapping fails on a fresh container, the build panics. Documentation is executable code.
 
 ### C. Dismantling Tribal Knowledge via Executable Control Planes
 Every obscure tribal process (requesting API tokens, triggering staging deployments, seeding local databases) must be converted into automated agent commands or CLI scripts. If an operation isn't executable via a single CLI command, it does not exist.
