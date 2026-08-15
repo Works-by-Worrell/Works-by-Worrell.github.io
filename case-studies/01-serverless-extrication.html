@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Serverless Trap | Works by Worrell</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .article-body {
+            color: #d1d5db;
+            line-height: 1.7;
+        }
+
+        .article-body h2 {
+            color: #fff;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-box {
+            background: rgba(220, 38, 38, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .metric-box p {
+            margin: 0;
+            color: #fca5a5;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="article-mode">
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+    
+    <main class="container article-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="./" class="back-link">
+                <svg height="16" width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Initiatives
+            </a>
+        </nav>
+
+        <article class="article-content glass-effect" style="padding: 3rem;">
+            <h1>The Serverless Trap: Scaling to Zero and the $0.00 Budget</h1>
+            <p class="subtitle" style="color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem;">Date: August 2026</p>
+            
+            <div class="tags" style="display: flex; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 2rem;">
+                <span class="tag" style="background: rgba(94, 106, 210, 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">GCP</span>
+                <span class="tag" style="background: rgba(94, 106, 210, 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">Architecture</span>
+                <span class="tag" style="background: rgba(94, 106, 210, 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">Post-Mortem</span>
+            </div>
+
+            <div class="article-body">
+                <h2>What I Wanted</h2>
+                <p>To eliminate local hardware dependencies for my agentic workflows, I needed a highly available, standardized execution plane. The architecture mandated a strict <strong>$0.00/month infrastructure cost constraint</strong> to prove that complex, enterprise-grade autonomous pipelines could be built and operated without institutional funding.</p>
+                <p>The chosen architecture was Google Cloud Run. By utilizing serverless containers, the system could theoretically "scale to zero" when idle, avoiding all compute charges while remaining instantly available.</p>
+
+                <h2>What I Did</h2>
+                <p>I migrated the Warlock Agent Server to GCP using Terraform. To support the new Model Context Protocol (MCP) for tool routing, I implemented the <strong>Server-Sent Events (SSE)</strong> transport layer. This allowed distributed agents (like the Eldritch Harvester) to connect via HTTP, request tool execution, and stream results back asynchronously.</p>
+
+                <div class="metric-box">
+                    <p>🚨 INCIDENT: Unbounded Billing Accumulation</p>
+                    <p>Total Cloud Run Instance Hours: 1,304<br>Total Cost: $16.71 (1,111% increase over prior period)</p>
+                </div>
+
+                <h2>What I Learned</h2>
+                <p>The architecture fundamentally failed due to a protocol mismatch. Cloud Run billing is based on instance uptime. The MCP SSE transport requires persistent, long-lived HTTP connections to stream context. Because the connection never closed, <strong>the container could never scale to zero.</strong></p>
+                
+                <p>This "Serverless Trap" is a form of economic gatekeeping. The tooling ecosystem presents small developers with a false binary: either pay a "cloud tax" for persistent centralized servers, or run ungoverned local scripts.</p>
+
+                <p>I pivoted. I demolished the Cloud Run infrastructure completely. Instead of a centralized cloud server, I redesigned the platform to utilize an <strong>immutable, decentralized edge-execution model</strong>. The Warlock server is now distributed as a pinned Python package and executed locally by the client over standard I/O streams using <code>uvx run warlock-mcp --transport stdio</code>.</p>
+
+                <p><strong>The Result:</strong> Centralized GitOps governance, zero developer drift, zero latency network hops, and an immediate return to the $0.00 budget constraint.</p>
+            </div>
+        </article>
+    </main>
+</body>
+</html>

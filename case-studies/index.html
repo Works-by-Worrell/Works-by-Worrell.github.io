@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Case Studies | Works by Worrell</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .case-card {
+            background: rgba(25, 25, 35, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .case-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            background: rgba(25, 25, 35, 0.6);
+        }
+
+        .case-card h3 {
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .case-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(94, 106, 210, 0.15);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="article-mode">
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+    
+    <main class="container article-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="../" class="back-link">
+                <svg height="16" width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Profile
+            </a>
+        </nav>
+
+        <article class="article-content glass-effect" style="padding: 3rem;">
+            <h1>Engineering Case Studies</h1>
+            <p class="subtitle" style="color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem;">Architectural decisions, trade-offs, and post-mortems from the trenches.</p>
+            
+            <div class="grid-layout">
+                <a href="01-serverless-extrication.html" class="case-card">
+                    <h3>The Serverless Trap: Scaling to Zero and the $0.00 Budget</h3>
+                    <p>How an architectural mismatch between Server-Sent Events (SSE) and GCP Cloud Run triggered a massive billing failure, and how we pivoted to a decentralized edge-execution model to restore strict budget controls.</p>
+                    <div class="tags">
+                        <span class="tag">GCP</span>
+                        <span class="tag">Architecture</span>
+                        <span class="tag">Post-Mortem</span>
+                    </div>
+                </a>
+
+                <a href="#" class="case-card">
+                    <h3>GitOps for Agentic Cognitive Layers</h3>
+                    <p>Designing a decoupled configuration pipeline using Firestore and declarative ETLs to separate secure operational logic from public codebase repositories.</p>
+                    <div class="tags">
+                        <span class="tag">GitOps</span>
+                        <span class="tag">Security</span>
+                        <span class="tag">System Design</span>
+                    </div>
+                </a>
+
+                <a href="#" class="case-card">
+                    <h3>Frictionless Onboarding: Two-Syllable Execution</h3>
+                    <p>Building abstract CLI wrappers to completely eliminate environment setup friction, enforcing the philosophy that engineers shouldn't have to fight their toolchain.</p>
+                    <div class="tags">
+                        <span class="tag">Developer Experience</span>
+                        <span class="tag">Bash</span>
+                        <span class="tag">UX</span>
+                    </div>
+                </a>
+            </div>
+        </article>
+    </main>
+</body>
+</html>
