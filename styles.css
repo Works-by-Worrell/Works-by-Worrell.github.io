@@ -14,6 +14,12 @@
     padding: 0;
 }
 
+html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
 a, a:visited {
     color: var(--accent);
     text-decoration: none;
@@ -33,12 +39,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow-x: hidden;
 }
 
 body.article-mode {
     align-items: flex-start;
-    padding: 4rem 1rem;
+    padding: 3rem 1rem;
     overflow-y: auto;
 }
 
@@ -92,7 +97,7 @@ body.article-mode {
 
 .container.article-container {
     max-width: 850px;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 .glass-effect {
@@ -297,7 +302,7 @@ sup a:hover {
     border-radius: 3px;
 }
 
-/* Visual Diagram Components (Un-terminalized) */
+/* Visual Diagram Components */
 .consent-sandbox-visual {
     margin: 2rem 0;
     background: rgba(10, 10, 18, 0.7);
@@ -507,6 +512,13 @@ sup a:hover {
     margin-bottom: 0.5rem;
 }
 
+/* Table Responsive Wrapper */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .article-content table {
     width: 100%;
     border-collapse: collapse;
@@ -580,10 +592,10 @@ sup a:hover {
     color: var(--text-muted);
 }
 
-/* Mobile Responsive Table Transformation (< 680px) */
-@media (max-width: 680px) {
+/* Mobile Responsive Table Transformation (< 850px) */
+@media (max-width: 850px) {
     .glass-effect.article-glass {
-        padding: 1.75rem 1.25rem;
+        padding: 1.5rem 1rem;
     }
     
     .equation-pipeline {
@@ -602,11 +614,12 @@ sup a:hover {
     .article-content tr, 
     .article-content td {
         display: block;
-        width: 100%;
+        width: 100% !important;
+        box-sizing: border-box;
     }
 
     .article-content thead {
-        display: none; /* Hide header row on mobile */
+        display: none !important; /* Hide header row on mobile */
     }
 
     .article-content tr {
@@ -618,13 +631,13 @@ sup a:hover {
     }
 
     .article-content td {
-        border: none;
-        padding: 0.4rem 0;
-        background: transparent;
+        border: none !important;
+        padding: 0.4rem 0 !important;
+        background: transparent !important;
     }
 
     .article-content td:nth-child(1) {
-        display: none; /* Hide index number on card header */
+        display: none !important; /* Hide index number on card header */
     }
 
     .article-content td:nth-child(2) {
@@ -641,8 +654,8 @@ sup a:hover {
     }
 
     .article-content td:nth-child(4) {
-        border-top: 1px dashed rgba(255, 255, 255, 0.08);
-        padding-top: 0.75rem;
+        border-top: 1px dashed rgba(255, 255, 255, 0.08) !important;
+        padding-top: 0.75rem !important;
         display: flex;
         justify-content: flex-end;
     }
