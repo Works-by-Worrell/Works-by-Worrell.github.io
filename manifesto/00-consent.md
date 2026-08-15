@@ -1,6 +1,6 @@
 # Principle 0: Consent (Human-in-the-Loop Architecture)
 
-> *"Consent isn't the 11th principle tacked onto the end of a gate speech—it is Index 0. In computer science, we start counting at zero. If Index 0 fails, the rest of the array panics."*
+> *"Consent isn't the 11th principle tacked onto the end of a gate speech: it is Index 0. In computer science, we start counting at zero. If Index 0 fails, the rest of the array panics."*
 
 *Part of the [11 Principles of Software Engineering Manifesto](./README.md).*
 
@@ -8,17 +8,17 @@
 
 ## 1. The Burner Reality: Zero-Indexing Consent
 
-At regional events like Interfuse and Freezerburn, Greeters traditionally cover Consent as the "11th Principle"—an afterthought appended to the tail of Larry Harvey's original ten <sup>[1](#ref-1)</sup>. 
+At regional events like Interfuse and Freezerburn, Greeters traditionally cover Consent as the "11th Principle": an afterthought appended to the tail of Larry Harvey's original ten <sup>[1](#ref-1)</sup>. 
 
 That order is structurally flawed. In software engineering and computer science, we index from **0**. 
 
-Consent is not a footnote; it is the zero-indexed prerequisite of human community. Radical Inclusion without Consent is trespass. Radical Self-Expression without Consent is assault. Communal Effort without Consent is exploitation. When Index 0 is compromised, every downstream principle panics.
+Consent is not a footnote. It is the zero-indexed prerequisite of human community. Radical Inclusion without Consent is trespass. Radical Self-Expression without Consent is assault. Communal Effort without Consent is exploitation. When Index 0 is compromised, every downstream principle panics.
 
 ---
 
 ## 2. The Supply-Chain Sin: Upstream Consent & Scraped Provenance
 
-Consent in modern software and autonomous AI systems isn't just about what an application does to the end-user—it is about what the system swallowed to exist in the first place.
+Consent in modern software and autonomous AI systems isn't just about what an application does to the end-user. It is about what the system swallowed to exist in the first place.
 
 The rapid acceleration of generative AI and enterprise automation exposed a systemic, industry-wide failure of upstream consent:
 
@@ -37,7 +37,7 @@ When engineers consume these tools uncritically, they become unwitting accomplic
 Software engineering currently suffers from two opposing failures of consent:
 
 1. **Performative Lip-Service (Opt-Out Harassment):** 50-page Terms of Service agreements, cookie banners, and default-enabled telemetry that presume consent unless the user fights through submenus to disable it.
-2. **Decision Fatigue (The Rubber-Stamp Cascade):** Naïve Human-in-the-Loop implementations that prompt the operator for every minor action destroy both developer velocity and **code quality**. When an engineer clicks "Approve" 50 times an hour, critical evaluation vanishes. Consent degrades into muscle-memory rubber-stamping. Engineers stop reading diffs, missing the "little things"—which compound into catastrophic, system-wide failures. Badly designed consent gates create a dangerous illusion of safety while actively engineering quality collapse.
+2. **Decision Fatigue (The Rubber-Stamp Cascade):** Naïve Human-in-the-Loop implementations that prompt the operator for every minor action destroy both developer velocity and **code quality**. When an engineer clicks "Approve" 50 times an hour, critical evaluation vanishes. Consent degrades into muscle-memory rubber-stamping. Engineers stop reading diffs, missing the "little things" (which compound into catastrophic, system-wide failures). Badly designed consent gates create a dangerous illusion of safety while actively engineering quality collapse.
 
 ---
 
@@ -66,7 +66,7 @@ To enforce Principle 0 without causing decision fatigue, autonomous architecture
 
 ### The Three Rules of Index 0 Architecture:
 
-1. **Explicit Opt-In & Absolute Right to Leave (Frictionless Egress):** All automated capabilities must be `opt-in` by default. Crucially, opting out or leaving the system must be an absolute, frictionless right. At a Burn, even when the gate is closed for event safety, if a participant wants to leave, an Event Coordinator makes it happen—nobody is held hostage. In software architecture, consent requires **Frictionless Egress**: zero vendor lock-in, zero hostage data, zero dark-pattern exit queues, and instant, clean teardowns of running tasks or agent sandboxes.
+1. **Explicit Opt-In & Absolute Right to Leave (Frictionless Egress):** All automated capabilities must be `opt-in` by default. Crucially, opting out or leaving the system must be an absolute, frictionless right. At a Burn, even when the gate is closed for event safety, if a participant wants to leave, an Event Coordinator makes it happen: nobody is held hostage. In software architecture, consent requires **Frictionless Egress**: zero vendor lock-in, zero hostage data, zero dark-pattern exit queues, and instant, clean teardowns of running tasks or agent sandboxes.
 2. **Scoped Autonomy (Eliminating Decision Fatigue):** The human operator defines and approves the *Boundary Contract* upfront. Within the local sandbox (reading files, running tests, writing scratch code), agents operate with 100% autonomy.
 3. **Hard Breakpoints at Blast-Radius Boundaries:** Human-in-the-Loop confirmation is reserved strictly for actions that cross the boundary into public, shared, or irreversible state (remote pushes, schema mutations, financial/API cost triggers, upstream data ingestion).
 
@@ -76,7 +76,7 @@ To enforce Principle 0 without causing decision fatigue, autonomous architecture
 
 The ultimate paradox of Consent is the **Emergency Intervention**: *When does a system have the right to override an individual's autonomy without their consent?*
 
-On Saturday night at Interfuse, while thousands watch the effigy burn, the Perimeter team doesn't watch the fire—they face the crowd with spotlights. Behind them stand the **Sandmen**: individuals chosen for their physical capability to intercept anyone attempting to breach the perimeter and leap into the fire. 
+On Saturday night at Interfuse, while thousands watch the effigy burn, the Perimeter team doesn't watch the fire: they face the crowd with spotlights. Behind them stand the **Sandmen**: individuals chosen for their physical capability to intercept anyone attempting to breach the perimeter and leap into the fire. 
 
 Tackling a runner physically violates that individual's immediate physical consent. But it is done for a higher-order purpose: **to prevent a catastrophic, irreversible violation of consent for thousands of participants who did not consent to witnessing a trauma.**
 
@@ -127,7 +127,7 @@ You cannot enforce Index 0 on a 10-year-old monolith overnight without causing m
 To run the Sandman Circuit Breaker, system observability is mandatory. However, observability easily degrades into consent-violating surveillance (recording user sessions, harvesting un-sanitized PII, logging developer keystrokes).
 
 **The Solution: Least-Privilege Telemetry.** 
-Observability tools are granted access strictly to **operational metadata** (CPU, memory, request rates, error latency)—never payload data, user credentials, or raw source code <sup>[4](#ref-4)</sup>. Telemetry exists purely for operational safety (Sandman protection), never for secondary data harvesting or employee surveillance.
+Observability tools are granted access strictly to **operational metadata** (CPU, memory, request rates, error latency): never payload data, user credentials, or raw source code <sup>[4](#ref-4)</sup>. Telemetry exists purely for operational safety (Sandman protection), never for secondary data harvesting or employee surveillance.
 
 ---
 
