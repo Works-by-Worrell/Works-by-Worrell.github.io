@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitOps for Agentic Cognitive Layers | Works by Worrell</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .article-body {
+            color: #d1d5db;
+            line-height: 1.7;
+        }
+
+        .article-body h2 {
+            color: #fff;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-box {
+            background: rgba(37, 165, 95, 0.1);
+            border-left: 4px solid #25a55f;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .metric-box p {
+            margin: 0;
+            color: #86efac;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="article-mode">
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+    
+    <main class="container article-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="./" class="back-link">
+                <svg height="16" width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Initiatives
+            </a>
+        </nav>
+
+        <article class="article-content glass-effect" style="padding: 3rem;">
+            <h1>GitOps for Agentic Cognitive Layers</h1>
+            <p class="subtitle" style="color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem;">Date: August 2026</p>
+            
+            <div class="tags" style="display: flex; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 2rem;">
+                <span class="tag" style="background: rgba(94, 106, 210, 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">GitOps</span>
+                <span class="tag" style="background: rgba(94, 106, 210, 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">Security</span>
+                <span class="tag" style="background: rgba(94, 106, 210, 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">System Design</span>
+            </div>
+
+            <div class="article-body">
+                <h2>What I Wanted</h2>
+                <p>As the Works-by-Worrell agentic ecosystem scaled, storing system prompts, API keys, and operational parameters within the application repositories became a severe governance risk. I needed a mechanism to decouple the generic application code from the highly proprietary "cognitive data" (prompts, schemas, targeting criteria) driving the agents.</p>
+                <p>The goal was to enable completely public, open-source codebases while maintaining an impenetrable, private data layer to dictate business logic.</p>
+
+                <h2>What I Did</h2>
+                <p>I architected a multi-repository topology driven by a strict GitOps methodology.</p>
+                <ul>
+                    <li><strong>Repository Split:</strong> The monolithic codebase was fractured into specialized micro-repositories (e.g., <code>wbw-infra</code>, <code>warlock-mcp</code>, <code>wbw-config</code>, <code>wbw-config-private</code>).</li>
+                    <li><strong>Decoupled Data Access:</strong> I implemented the Repository Pattern within the backend code, decoupling the application logic from the underlying datastore via strict interfaces (e.g., <code>AgentRepository</code>).</li>
+                    <li><strong>Declarative Ingestion:</strong> I built the <code>AgentConfigIngestionPipeline</code>—an ETL workflow that validates raw Markdown/YAML configuration files from the config repositories, computes deltas, and securely syncs them into Google Firestore.</li>
+                </ul>
+
+                <div class="metric-box">
+                    <p>✅ GOVERNANCE ESTABLISHED</p>
+                    <p>Result: Application code contains 0 hardcoded prompts or secrets. Behavior is 100% dictated by declarative, version-controlled runtime data.</p>
+                </div>
+
+                <h2>What I Learned</h2>
+                <p>Treating LLM system prompts as code is a mistake. Prompts are highly volatile business logic data, not infrastructure.</p>
+                <p>By enforcing this separation of concerns, the platform achieved extreme flexibility. The exact same public open-source repository could be directed to evaluate GitHub bugs or scrape Staff Engineering job postings entirely by hot-swapping the private Firestore overlay at runtime.</p>
+                <p>This initiative validated that enterprise-grade security, auditability, and cognitive governance can be applied to AI agents without sacrificing rapid local development velocity.</p>
+            </div>
+        </article>
+    </main>
+</body>
+</html>

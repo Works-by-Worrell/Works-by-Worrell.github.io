@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frictionless Onboarding: Two-Syllable Execution | Works by Worrell</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .article-body {
+            color: #d1d5db;
+            line-height: 1.7;
+        }
+
+        .article-body h2 {
+            color: #fff;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-box {
+            background: rgba(94, 106, 210, 0.1);
+            border-left: 4px solid #5e6ad2;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .metric-box p {
+            margin: 0;
+            color: #a5b4fc;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="article-mode">
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+    
+    <main class="container article-container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="./" class="back-link">
+                <svg height="16" width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Initiatives
+            </a>
+        </nav>
+
+        <article class="article-content glass-effect" style="padding: 3rem;">
+            <h1>Frictionless Onboarding: Two-Syllable Execution</h1>
+            <p class="subtitle" style="color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem;">Date: August 2026</p>
+            
+            <div class="tags" style="display: flex; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 2rem;">
+                <span class="tag" style="background: rgba(94, 106, 210, 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">Developer Experience</span>
+                <span class="tag" style="background: rgba(94, 106, 210, 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">Bash</span>
+                <span class="tag" style="background: rgba(94, 106, 210, 0.15); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">UX</span>
+            </div>
+
+            <div class="article-body">
+                <h2>What I Wanted</h2>
+                <p>The standard pattern in modern software development—requiring engineers to decipher 40-page Confluence wikis just to boot a local testing environment—is an institutional failure. It causes high attrition, missed deadlines, and severe developer frustration.</p>
+                <p>I set a strict operational constraint for the Works-by-Worrell ecosystem known as "Two-Syllable Execution." If an engineer needs to memorize a specific path, activate a specific virtual environment, and pass five CLI flags just to start the application, the architecture is broken.</p>
+
+                <h2>What I Did</h2>
+                <p>I abstracted the entire startup sequence for the platform's core agents behind intelligent shell wrappers.</p>
+                <ul>
+                    <li><strong>Path Resolution:</strong> I developed scripts utilizing <code>BASH_SOURCE[0]</code> to automatically detect their execution context, allowing them to run from anywhere on the host filesystem without <code>cd</code> requirements.</li>
+                    <li><strong>Toolchain Abstraction:</strong> I integrated <code>uv</code> (the ultra-fast Python package installer) directly into the wrappers, removing the requirement for developers to manually manage <code>venv</code> activations.</li>
+                    <li><strong>Global Symlinking:</strong> I deployed a standardized <code>install.sh</code> pattern that securely links the wrappers into the user's <code>~/.local/bin</code> PATH variable.</li>
+                </ul>
+
+                <div class="metric-box">
+                    <p>🚀 EXECUTION VELOCITY</p>
+                    <p>Instead of typing:<br><code>cd ~/Works-by-Worrell/wbw-daemon && source .venv/bin/activate && uv run main.py --agent warlock</code><br><br>The engineer simply types:<br><code>wbw-daemon</code></p>
+                </div>
+
+                <h2>What I Learned</h2>
+                <p>Developer Experience (DX) is not a "nice-to-have" luxury; it is the fundamental limiting factor on an organization's deployment velocity.</p>
+                <p>By enforcing the "Two-Syllable Execution" rule across every micro-repository in the ecosystem, I completely eliminated local boot friction. An engineer does not need to know that the backend is running Python, nor do they need to know what directory the source code lives in. They only need to know what they want to execute.</p>
+                <p>Building abstract CLI interfaces is the single highest-ROI investment an architect can make in their team's productivity.</p>
+            </div>
+        </article>
+    </main>
+</body>
+</html>
