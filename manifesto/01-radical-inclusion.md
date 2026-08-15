@@ -82,7 +82,7 @@ On a fresh container start, if local persistent storage is uninitialized, automa
 Documentation rots the moment humans abandon it. Autonomous agents must validate onboarding scripts on every CI run. If `wbw-daemon` bootstrapping fails on a fresh container, the build panics. Documentation is executable code.
 
 ### C. Dismantling Tribal Knowledge via Executable Control Planes
-Every obscure tribal process (requesting API tokens, triggering staging deployments, seeding local databases) must be converted into automated agent commands or CLI scripts. If an operation isn't executable via a single CLI command, it does not exist.
+Every obscure tribal process—from requesting API tokens and triggering staging deployments to self-hydrating local databases (as specified in 4A)—must be converted into automated agent commands or CLI scripts. If an operation isn't executable via a single CLI command, it does not exist.
 
 ---
 
