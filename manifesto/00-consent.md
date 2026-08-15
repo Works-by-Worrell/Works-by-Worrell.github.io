@@ -16,7 +16,7 @@ Consent is not a footnote; it is the zero-indexed foundation of human community.
 
 ---
 
-## 2. The Supply-Chain Sin: Upstream Consent & Scraped Providence
+## 2. The Supply-Chain Sin: Upstream Consent & Scraped Provenance
 
 Consent in modern software and AI isn't just about what a system does to the end-user—it is about what the system swallowed to exist in the first place.
 
