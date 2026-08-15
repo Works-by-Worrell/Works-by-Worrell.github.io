@@ -34,7 +34,7 @@
                 <p>At Gate, when a first-time participant ("virgin") arrives at a Burn, the event pauses to welcome them. Greeters don't inspect credentials, audit background wealth, or demand an ancient secret password. The virgin rings the brass bell, rolls in the playa dust, and receives a warm embrace: <em>"Welcome Home!"</em> <sup><a href="#ref-1">[1]</a></sup></p>
                 <p>Contrast this with traditional enterprise software engineering.</p>
                 <p>Historically, industrial tech culture has operated on a toxic, unwritten motto: <em>"Fuck you, I got mine, good luck."</em> Tech built steep economic and cultural paywalls around itself: expensive computer science degrees, proprietary $1,500 conference gates, and an elitist priesthood of senior developers who guard tribal knowledge like dragon hoarders <sup><a href="#ref-4">[4]</a></sup>.</p>
-                <p>For self-taught engineers coming from working-class backgrounds—who grew up tinkering on a Commodore 64 or a Windows 95 machine without rich families or well-funded libraries—breaking into tech meant running a brutal, unnecessary gauntlet.</p>
+                <p>For self-taught engineers coming from working-class backgrounds (who grew up tinkering on a Commodore 64 or a Windows 95 machine without rich families or well-funded libraries), breaking into tech meant running a brutal, unnecessary gauntlet.</p>
                 <p>Worse, when young, curious minds explore system boundaries without guidance, legacy institutions routinely punish curiosity as malice. When a 16-year-old kid in 1997 receives access to school email for the first time and sends a harmless encrypted string (<code>5...4...3...2...1...Boom!</code>), clueless authority figures vilify the student as a security threat rather than channeling that curiosity into safe, guarded sandboxes.</p>
                 <p>Radical Inclusion demands the total destruction of the engineering priesthood.</p>
 
@@ -42,12 +42,12 @@
                 <p>In corporate software development, gatekeeping rarely presents as explicit hostility. Instead, it hides behind bureaucratic inertia, political self-preservation, and unmanaged <strong>cognitive load</strong> <sup><a href="#ref-2">[2]</a></sup>:</p>
                 <ul>
                     <li><strong>Case Study A (The Auto-Parts Catalog Monolith):</strong> A newly hired engineer joins an auto-parts enterprise catalog team. The architecture requires a 500GB SQL Server engine stuffed onto a Virtual Desktop Infrastructure (VDI) instance, running alongside a Frankenstein stack of WinForms .NET, Tomcat Java 8 web services, and a Vue frontend. Confluence contains three competing, contradictory setup guides. Finding missing secrets requires begging senior devs in Slack. Result: It takes <strong>three months</strong> for a competent engineer to ship line 1 of production code.</li>
-                    <li><strong>Case Study B (The Logistics Monolith):</strong> An enterprise logistics codebase reaches 500,000 lines of code—largely because previous teams copy-pasted entire framework classes whole-cloth due to a lack of object-oriented inheritance understanding. When a new developer attempts a modest refactor, hidden couplings blow up their local environment for a week.</li>
+                    <li><strong>Case Study B (The Logistics Monolith):</strong> An enterprise logistics codebase reaches 500,000 lines of code: largely because previous teams copy-pasted entire framework classes whole-cloth due to a lack of object-oriented inheritance understanding. When a new developer attempts a modest refactor, hidden couplings blow up their local environment for a week.</li>
                 </ul>
-                <p>From a Staff/Principal Architectural perspective, these multi-month onboarding black holes are not accidental: they are structural manifestations of gatekeeping. In legacy IT, artificial complexity creates "irrelevancy protection"—senior maintainers hoard tribal secrets to ensure their own indispensable job security. Bad DX keeps newcomers helpless, driving cognitive load to catastrophic levels.</p>
+                <p>From a Staff/Principal Architectural perspective, these multi-month onboarding black holes are not accidental: they are structural manifestations of gatekeeping. In legacy IT, artificial complexity creates "irrelevancy protection": senior maintainers hoard tribal secrets to ensure their own indispensable job security. Bad DX keeps newcomers helpless, driving cognitive load to catastrophic levels.</p>
 
                 <h2>3. The Architectural Protocol: Zero-Gatekeeper DX & The Golden Path</h2>
-                <p>To enforce Principle 1, autonomous architectures must guarantee <strong>Frictionless Onboarding</strong>: any stranger who clones the repository must be able to run, test, and contribute on Day 1 <sup><a href="#ref-3">[3]</a></sup>. In modern platform engineering, this is the <strong>Golden Path</strong>—making the right architectural path the path of least resistance.</p>
+                <p>To enforce Principle 1, autonomous architectures must guarantee <strong>Frictionless Onboarding</strong>: any stranger who clones the repository must be able to run, test, and contribute on Day 1 <sup><a href="#ref-3">[3]</a></sup>. In modern platform engineering, this is the <strong>Golden Path</strong>: making the right architectural path the path of least resistance.</p>
 
                 <div class="sandman-visual-pipeline">
                     <div class="sandman-stage crowd-stage">
@@ -96,7 +96,7 @@
                 <p>Documentation rots when humans write it once and abandon it. Autonomous agents must validate onboarding scripts on every CI run. If <code>agy-start.sh</code> fails on a fresh container, the build breaks. Documentation is code.</p>
 
                 <h3>C. Dismantling Tribal Knowledge via Executable Control Planes</h3>
-                <p>Every obscure tribal process—how to request API tokens, how to trigger staging deployments, how to seed local databases—must be converted into automated agent commands or CLI scripts. If an operation isn't executable via a single CLI command, it does not exist.</p>
+                <p>Every obscure tribal process (requesting API tokens, triggering staging deployments, seeding local databases) must be converted into automated agent commands or CLI scripts. If an operation isn't executable via a single CLI command, it does not exist.</p>
 
                 <h2>5. References & Canonical Citations</h2>
                 <ol>

@@ -16,7 +16,7 @@ Contrast this with traditional enterprise software engineering.
 
 Historically, industrial tech culture has operated on a toxic, unwritten motto: *"Fuck you, I got mine, good luck."* Tech built steep economic and cultural paywalls around itself: expensive computer science degrees, proprietary \$1,500 conference gates, and an elitist priesthood of senior developers who guard tribal knowledge like dragon hoarders <sup>[4](#ref-4)</sup>. 
 
-For self-taught engineers coming from working-class backgrounds—who grew up tinkering on a Commodore 64 or a Windows 95 machine without rich families or well-funded libraries—breaking into tech meant running a brutal, unnecessary gauntlet. 
+For self-taught engineers coming from working-class backgrounds (who grew up tinkering on a Commodore 64 or a Windows 95 machine without rich families or well-funded libraries), breaking into tech meant running a brutal, unnecessary gauntlet. 
 
 Worse, when young, curious minds explore system boundaries without guidance, legacy institutions routinely punish curiosity as malice. When a 16-year-old kid in 1997 receives access to school email for the first time and sends a harmless encrypted string (`5...4...3...2...1...Boom!`), clueless authority figures vilify the student as a security threat rather than channeling that curiosity into safe, guarded sandboxes.
 
@@ -29,15 +29,15 @@ Radical Inclusion demands the total destruction of the engineering priesthood.
 In corporate software development, gatekeeping rarely presents as explicit hostility. Instead, it hides behind bureaucratic inertia, political self-preservation, and unmanaged **cognitive load** <sup>[2](#ref-2)</sup>:
 
 * **Case Study A (The Auto-Parts Catalog Monolith):** A newly hired engineer joins an auto-parts enterprise catalog team. The architecture requires a 500GB SQL Server engine stuffed onto a Virtual Desktop Infrastructure (VDI) instance, running alongside a Frankenstein stack of WinForms .NET, Tomcat Java 8 web services, and a Vue frontend. Confluence contains three competing, contradictory setup guides. Finding missing secrets requires begging senior devs in Slack. Result: It takes **three months** for a competent engineer to ship line 1 of production code.
-* **Case Study B (The Logistics Monolith):** An enterprise logistics codebase reaches 500,000 lines of code—largely because previous teams copy-pasted entire framework classes whole-cloth due to a lack of object-oriented inheritance understanding. When a new developer attempts a modest refactor, hidden couplings blow up their local environment for a week.
+* **Case Study B (The Logistics Monolith):** An enterprise logistics codebase reaches 500,000 lines of code: largely because previous teams copy-pasted entire framework classes whole-cloth due to a lack of object-oriented inheritance understanding. When a new developer attempts a modest refactor, hidden couplings blow up their local environment for a week.
 
-From a Staff/Principal Architectural perspective, these multi-month onboarding black holes are not accidental: they are structural manifestations of gatekeeping. In legacy IT, artificial complexity creates "irrelevancy protection"—senior maintainers hoard tribal secrets to ensure their own indispensable job security. Bad DX keeps newcomers helpless, driving cognitive load to catastrophic levels.
+From a Staff/Principal Architectural perspective, these multi-month onboarding black holes are not accidental: they are structural manifestations of gatekeeping. In legacy IT, artificial complexity creates "irrelevancy protection": senior maintainers hoard tribal secrets to ensure their own indispensable job security. Bad DX keeps newcomers helpless, driving cognitive load to catastrophic levels.
 
 ---
 
 ## 3. The Architectural Protocol: Zero-Gatekeeper DX & The Golden Path
 
-To enforce Principle 1, autonomous architectures must guarantee **Frictionless Onboarding**: any stranger who clones the repository must be able to run, test, and contribute on Day 1 <sup>[3](#ref-3)</sup>. In modern platform engineering, this is the **Golden Path**—making the right architectural path the path of least resistance.
+To enforce Principle 1, autonomous architectures must guarantee **Frictionless Onboarding**: any stranger who clones the repository must be able to run, test, and contribute on Day 1 <sup>[3](#ref-3)</sup>. In modern platform engineering, this is the **Golden Path**: making the right architectural path the path of least resistance.
 
 ```
 +-------------------------------------------------------------------+
@@ -77,7 +77,7 @@ Destroy the "works on my machine" paradigm. Standardize all development environm
 Documentation rots when humans write it once and abandon it. Autonomous agents must validate onboarding scripts on every CI run. If `agy-start.sh` fails on a fresh container, the build breaks. Documentation is code.
 
 ### C. Dismantling Tribal Knowledge via Executable Control Planes
-Every obscure tribal process—how to request API tokens, how to trigger staging deployments, how to seed local databases—must be converted into automated agent commands or CLI scripts. If an operation isn't executable via a single CLI command, it does not exist.
+Every obscure tribal process (requesting API tokens, triggering staging deployments, seeding local databases) must be converted into automated agent commands or CLI scripts. If an operation isn't executable via a single CLI command, it does not exist.
 
 ---
 
