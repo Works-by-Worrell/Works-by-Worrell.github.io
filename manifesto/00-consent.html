@@ -50,31 +50,30 @@
 
                 <h2>4. The Architectural Protocol: Scoped Sandbox Boundaries</h2>
                 <p>To enforce Principle 0 without causing decision fatigue, autonomous architectures must implement <strong>Policy-Based Scoped Consent</strong>:</p>
-                <div class="ascii-terminal-window">
-                    <div class="ascii-header">
-                        <div class="terminal-dots">
-                            <span class="dot dot-red"></span>
-                            <span class="dot dot-yellow"></span>
-                            <span class="dot dot-green"></span>
-                        </div>
-                        <span class="ascii-title">Architectural Schematic // Consent Sandbox Boundary</span>
+                <div class="consent-sandbox-visual">
+                    <div class="sandbox-header-badge">ARCHITECTURAL SCHEMATIC // THE CONSENT SANDBOX</div>
+                    
+                    <div class="sandbox-autonomous-zone">
+                        <div class="zone-title">✓ AUTONOMOUS ZONE (Zero Decision Fatigue)</div>
+                        <ul class="zone-list">
+                            <li>Read codebase files & dependencies</li>
+                            <li>Run local unit tests & linting</li>
+                            <li>Generate scratch files, local commits, & drafts</li>
+                        </ul>
                     </div>
-                    <pre class="ascii-body"><code>+-------------------------------------------------------------------+
-|                        THE CONSENT SANDBOX                        |
-|                                                                   |
-|   +-----------------------------------------------------------+   |
-|   | AUTONOMOUS ZONE (Zero Decision Fatigue)                    |   |
-|   | - Read codebase files & dependencies                      |   |
-|   | - Run local unit tests & linting                          |   |
-|   | - Generate scratch files, local commits, & drafts         |   |
-|   +-----------------------------------------------------------+   |
-|                                                                   |
-|   ===================== CONSENT GATE =========================   |
-|   (Requires Explicit Human-in-the-Loop Approval via Telemetry)    |
-|   - State Escalation: Remote git pushes, PR creation          |   |
-|   - Data Provenance: Ingesting unvetted external APIs/models  |   |
-|   - Destructive Action: Deleting branches, schema drops       |   |
-+-------------------------------------------------------------------+</code></pre>
+                    
+                    <div class="consent-gate-banner">
+                        <div class="gate-title">⚡ CONSENT GATE (Requires Explicit Human-in-the-Loop Telemetry Approval)</div>
+                    </div>
+                    
+                    <div class="sandbox-escalation-zone">
+                        <div class="zone-title" style="color: #f87171;">! ESCALATION BOUNDARY (Blast-Radius Control)</div>
+                        <ul class="zone-list">
+                            <li><strong>State Escalation:</strong> Remote git pushes, PR creation</li>
+                            <li><strong>Data Provenance:</strong> Ingesting unvetted external APIs / models</li>
+                            <li><strong>Destructive Action:</strong> Deleting branches, schema drops</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <h3>The Three Rules of Index 0 Architecture:</h3>
@@ -89,28 +88,34 @@
                 <p>On Saturday night at Interfuse, while thousands watch the effigy burn, the Perimeter team doesn't watch the fire: they face the crowd with spotlights. Behind them stand the <strong>Sandmen</strong>: individuals chosen for their physical capability to intercept anyone attempting to breach the perimeter and leap into the fire.</p>
                 <p>Tackling a runner physically violates that individual's immediate physical consent. But it is done for a higher-order purpose: <strong>to prevent a catastrophic, irreversible violation of consent for thousands of participants who did not consent to witnessing a trauma.</strong></p>
 
-                <div class="ascii-terminal-window">
-                    <div class="ascii-header">
-                        <div class="terminal-dots">
-                            <span class="dot dot-red"></span>
-                            <span class="dot dot-yellow"></span>
-                            <span class="dot dot-green"></span>
+                <div class="sandman-visual-pipeline">
+                    <div class="sandman-stage crowd-stage">
+                        <div class="stage-badge">STAGE 1</div>
+                        <div class="stage-body">
+                            <div class="stage-title">Normal System Execution</div>
+                            <div class="stage-sub">Crowd / Normal Subagent Task Operations</div>
                         </div>
-                        <span class="ascii-title">Architectural Schematic // Sandman Circuit Breaker</span>
                     </div>
-                    <pre class="ascii-body"><code>+-------------------------------------------------------------------+
-|                     THE SANDMAN ARCHITECTURE                      |
-|                                                                   |
-|   [ CROWD / NORMAL EXECUTION ]                                    |
-|              |                                                    |
-|              v                                                    |
-|   [ PERIMETER LINE ]  --> Verbal Warning / Telemetry Breakpoint   |
-|              | (If Boundary Breached / Runaway Process)           |
-|              v                                                    |
-|   [ SANDMAN INTERCEPT ] --> Hard Circuit Breaker / Emergency Kill  |
-|              |                                                    |
-|              +--> Protects System Integrity & Collective State    |
-+-------------------------------------------------------------------+</code></pre>
+                    
+                    <div class="pipeline-arrow">&darr; Continuous Operational Telemetry</div>
+                    
+                    <div class="sandman-stage perimeter-stage">
+                        <div class="stage-badge">STAGE 2</div>
+                        <div class="stage-body">
+                            <div class="stage-title">Perimeter Monitoring (Warnings)</div>
+                            <div class="stage-sub">Verbal Warning / Telemetry Breakpoint Alerts</div>
+                        </div>
+                    </div>
+                    
+                    <div class="pipeline-arrow danger-arrow">&darr; Boundary Breached / Runaway Threat</div>
+                    
+                    <div class="sandman-stage intercept-stage">
+                        <div class="stage-badge">STAGE 3</div>
+                        <div class="stage-body">
+                            <div class="stage-title">Sandman Intercept (Automated Circuit Breaker)</div>
+                            <div class="stage-sub">Hard Kill Switch / Un-bypassable Protection</div>
+                        </div>
+                    </div>
                 </div>
 
                 <h3>Software Architecture Mapping: The Sandman Circuit Breaker</h3>
