@@ -24,4 +24,4 @@ Works-by-Worrell.github.io/
 
 *   **GitHub Pages Hosting:** The `main` branch is configured to deploy automatically to GitHub Pages.
 *   **Custom Domain Ingress:** The `CNAME` file points the domain configuration to `worksbyworrell.com`, with HTTPS redirection managed directly by GitHub Frontend.
-*   **Root DNS Setup:** Custom A records point `worksbyworrell.com` to GitHub Pages IP boundaries, while the `warlock` subdomain is mapped via CNAME to GCP Frontend (`ghs.googlehosted.com.`) for the runtime MCP server.
+*   **Root DNS Setup:** Custom A records point `worksbyworrell.com` to GitHub Pages IP boundaries.
