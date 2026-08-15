@@ -10,13 +10,13 @@
 
 ## 1. The Burner Reality: The Virgin Bell vs. "Fuck You, I Got Mine"
 
-At Gate, when a first-time participant ("virgin") arrives at a Burn, the event pauses to welcome them. Greeters don't inspect credentials, audit background wealth, or demand an ancient secret password. The virgin rings the brass bell, rolls in the playa dust, and receives a warm embrace: *"Welcome Home!"* <sup>[1](#ref-1)</sup>
+At Gate, when a first-time participant ("virgin") arrives at a Burn, event operations halt to welcome them. Greeters do not audit credentials, demand entrance exams, or request secret handshakes. The virgin rings the brass bell, rolls in the playa dust, and hears the immediate declaration: *"Welcome Home!"* <sup>[1](#ref-1)</sup>
 
 Contrast this with traditional enterprise software engineering. 
 
-Historically, industrial tech culture has operated on a toxic, unwritten motto: *"Fuck you, I got mine, good luck."* Tech built steep economic and cultural paywalls around itself: expensive computer science degrees, proprietary \$1,500 conference gates, and an elitist priesthood of senior developers who guard tribal knowledge like dragon hoarders <sup>[4](#ref-4)</sup>. 
+Historically, industrial software engineering has operated under a toxic, unwritten ethos: *"Fuck you, I got mine. Good luck."* The industry erected steep economic and cultural paywalls: four-year CS degrees, proprietary \$1,500 conference gates, and an elitist priesthood of senior maintainers who hoard tribal knowledge to protect their own irrelevancy <sup>[4](#ref-4)</sup>. 
 
-For self-taught engineers coming from working-class backgrounds (who grew up tinkering on a Commodore 64 or a Windows 95 machine without rich families or well-funded libraries), breaking into tech meant running a brutal, unnecessary gauntlet. 
+For self-taught engineers from working-class backgrounds (who grew up tinkering on a Commodore 64 or a Windows 95 machine without rich families or well-funded libraries), breaking into tech meant running a brutal, unnecessary gauntlet. 
 
 Worse, when young, curious minds explore system boundaries without guidance, legacy institutions routinely punish curiosity as malice. When a 16-year-old kid in 1997 receives access to school email for the first time and sends a harmless encrypted string (`5...4...3...2...1...Boom!`), clueless authority figures vilify the student as a security threat rather than channeling that curiosity into safe, guarded sandboxes.
 
@@ -26,9 +26,9 @@ Radical Inclusion demands the total destruction of the engineering priesthood.
 
 ## 2. The Enterprise Failure State: The 3-Month Onboarding Black Hole
 
-In corporate software development, gatekeeping rarely presents as explicit hostility. Instead, it hides behind bureaucratic inertia, political self-preservation, and unmanaged **cognitive load** <sup>[2](#ref-2)</sup>:
+In enterprise software development, gatekeeping rarely manifests as explicit hostility. Instead, it weaponizes bureaucratic inertia, political self-preservation, and catastrophic **cognitive load** <sup>[2](#ref-2)</sup>:
 
-* **Case Study A (The Auto-Parts Catalog Monolith):** A newly hired engineer joins an auto-parts enterprise catalog team. The architecture requires a 500GB SQL Server engine stuffed onto a Virtual Desktop Infrastructure (VDI) instance, running alongside a Frankenstein stack of WinForms .NET, Tomcat Java 8 web services, and a Vue frontend. Confluence contains three competing, contradictory setup guides. Finding missing secrets requires begging senior devs in Slack. Result: It takes **three months** for a competent engineer to ship line 1 of production code.
+* **Case Study A (The Auto-Parts Catalog Monolith):** A newly hired engineer joins an enterprise auto-parts catalog team. The environment requires a 500GB SQL Server engine crammed onto a Virtual Desktop Infrastructure (VDI) instance, alongside a Frankenstein stack of WinForms .NET, Tomcat Java 8 web services, and a Vue frontend. Confluence contains three competing, contradictory setup guides. Finding missing secrets requires begging senior devs in Slack. Result: **Three months** pass before a competent engineer ships line one of production code.
 * **Case Study B (The Logistics Monolith):** An enterprise logistics codebase reaches 500,000 lines of code: largely because previous teams copy-pasted entire framework classes whole-cloth due to a lack of object-oriented inheritance understanding. When a new developer attempts a modest refactor, hidden couplings blow up their local environment for a week.
 
 From a Staff/Principal Architectural perspective, these multi-month onboarding black holes are not accidental: they are structural manifestations of gatekeeping. In legacy IT, artificial complexity creates "irrelevancy protection": senior maintainers hoard tribal secrets to ensure their own indispensable job security. Bad DX keeps newcomers helpless, driving cognitive load to catastrophic levels.
@@ -60,7 +60,7 @@ To enforce Principle 1, autonomous architectures must guarantee **Frictionless O
 
 ### The Three Rules of Zero-Gatekeeper Architecture:
 
-1. **The Two-Syllable Gate (`wbw-daemon` / `agy-start.sh`):** Onboarding must not require executing 40 manual setup commands or deciphering stale Confluence wikis. Onboarding must be a single, self-healing command. One script provisions the container, validates dependencies, spins up mock services, and drops the developer directly into a working state.
+1. **The Two-Syllable Gate (`wbw-daemon` / `agy-start.sh`):** Onboarding must never require executing 40 manual setup steps or deciphering stale Confluence wikis. Onboarding must be a single, self-healing command. One script provisions the container, validates dependencies, mocks external services, and drops the developer directly into a working state.
 2. **AI Pairing as the Democratic Equalizer:** Autonomous agent swarms act as the master mentor that self-taught engineers never had. An AI agent doesn't mock junior questions, hide tribal knowledge, or posture. It explains legacy monoliths, maps hidden class dependencies, and guides first-time contributors safely.
 3. **Fearless Refactoring via Guarded Sandboxes:** When local environments are isolated in reproducible containers backed by automated test suites, newcomers can refactor code without fear of blowing up their machine or breaking unrelated monolith subsystems.
 
@@ -74,7 +74,7 @@ Translating Radical Inclusion into enterprise architecture requires three concre
 Destroy the "works on my machine" paradigm. Standardize all development environments using containerized definitions (`DevContainers`, `Docker Compose`, or `Nix`). A principal architect's environment and a Day 1 intern's environment must be bit-for-bit identical.
 
 ### B. Living, Agent-Validated Documentation
-Documentation rots when humans write it once and abandon it. Autonomous agents must validate onboarding scripts on every CI run. If `agy-start.sh` fails on a fresh container, the build breaks. Documentation is code.
+Documentation rots the moment humans abandon it. Autonomous agents must validate onboarding scripts on every CI run. If `./agy-start.sh` fails on a fresh container, the build panics. Documentation is executable code.
 
 ### C. Dismantling Tribal Knowledge via Executable Control Planes
 Every obscure tribal process (requesting API tokens, triggering staging deployments, seeding local databases) must be converted into automated agent commands or CLI scripts. If an operation isn't executable via a single CLI command, it does not exist.
