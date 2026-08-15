@@ -10,11 +10,13 @@
 
 ## 1. The Burner Reality: The Virgin Bell vs. "Fuck You, I Got Mine"
 
-At Gate, when a first-time participant ("virgin") arrives at a Burn, event operations halt to welcome them. Greeters do not audit credentials, demand entrance exams, or request secret handshakes. The virgin rings the brass bell, rolls in the playa dust, and hears the immediate declaration: *"Welcome Home!"* <sup>[1](#ref-1)</sup>
+At a Burn, entry operations are split into two distinct, high-trust stages: **Gate** and **Greeters**. 
+
+Gate handles authentication and authorization: ticket validation, legal liability waivers, and wristbanding. Once authenticated through Gate, the participant arrives at Greeters. Here, operations pause to celebrate the stranger. Greeters do not audit credentials, demand entrance exams, or request secret handshakes. The first-time participant ("virgin") rings the brass bell, rolls in the playa dust, and hears the immediate declaration: *"Welcome Home!"* <sup>[1](#ref-1)</sup>
 
 Contrast this with traditional enterprise software engineering. 
 
-Historically, industrial software engineering has operated under a toxic, unwritten ethos: *"Fuck you, I got mine. Good luck."* The industry erected steep economic and cultural paywalls: four-year CS degrees, proprietary \$1,500 conference gates, and an elitist priesthood of senior maintainers who hoard tribal knowledge to protect their own irrelevancy <sup>[4](#ref-4)</sup>. 
+Historically, industrial software engineering has operated under a toxic, unwritten ethos: *"Fuck you, I got mine. Good luck."* Enterprise IT conflated necessary authentication (repo access) with arbitrary gatekeeping, erecting steep economic and cultural paywalls: four-year CS degrees, proprietary \$1,500 conference gates, and an elitist priesthood of senior maintainers who hoard tribal knowledge to protect their own irrelevancy <sup>[4](#ref-4)</sup>. 
 
 For self-taught engineers from working-class backgrounds (who grew up tinkering on a Commodore 64 or a Windows 95 machine without rich families or well-funded libraries), breaking into tech meant running a brutal, unnecessary gauntlet. 
 
@@ -43,24 +45,24 @@ To enforce Principle 1, autonomous architectures must guarantee **Frictionless O
 +-------------------------------------------------------------------+
 |               THE RADICAL INCLUSION ONBOARDING GATE               |
 |                                                                   |
-|   [ NEW CONTRIBUTOR / STRANGER ]                                  |
-|                 |                                                 |
-|                 v  Single Command: ./agy-start.sh / wbw-daemon    |
+|   [ GATE: AuthN / AuthZ (Legal Check-In & Repo Access) ]          |
+|                                 |                                 |
+|                                 v  Single Command: ./agy-start.sh |
 |   +-----------------------------------------------------------+   |
-|   | AUTOMATED DEV CONTAINER & AGENT BOOTSTRAP                 |   |
+|   | GREETERS: AUTOMATED DEV CONTAINER & AGENT BOOTSTRAP       |   |
 |   | - Self-provisioning container sandbox (Zero VDI hell)    |   |
 |   | - Agent-validated README & live environment checks        |   |
 |   | - AI pairing assistant for codebase architecture navigation|   |
 |   +-----------------------------------------------------------+   |
-|                 |                                                 |
-|                 v                                                 |
+|                                 |                                 |
+|                                 v                                 |
 |   [ FIRST PRODUCTION COMMIT / DAY 1 ]                             |
 +-------------------------------------------------------------------+
 ```
 
 ### The Three Rules of Zero-Gatekeeper Architecture:
 
-1. **The Two-Syllable Gate (`wbw-daemon` / `agy-start.sh`):** Onboarding must never require executing 40 manual setup steps or deciphering stale Confluence wikis. Onboarding must be a single, self-healing command. One script provisions the container, validates dependencies, mocks external services, and drops the developer directly into a working state.
+1. **The Two-Syllable Gate (`wbw-daemon` / `agy-start.sh`):** Once authenticated, onboarding must never require executing 40 manual setup steps or deciphering stale Confluence wikis. Onboarding must be a single, self-healing command. One script provisions the container, validates dependencies, mocks external services, and drops the developer directly into a working state.
 2. **AI Pairing as the Democratic Equalizer:** Autonomous agent swarms act as the master mentor that self-taught engineers never had. An AI agent doesn't mock junior questions, hide tribal knowledge, or posture. It explains legacy monoliths, maps hidden class dependencies, and guides first-time contributors safely.
 3. **Fearless Refactoring via Guarded Sandboxes:** When local environments are isolated in reproducible containers backed by automated test suites, newcomers can refactor code without fear of blowing up their machine or breaking unrelated monolith subsystems.
 

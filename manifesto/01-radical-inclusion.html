@@ -31,9 +31,10 @@
                 </div>
 
                 <h2>1. The Burner Reality: The Virgin Bell vs. "Fuck You, I Got Mine"</h2>
-                <p>At Gate, when a first-time participant ("virgin") arrives at a Burn, event operations halt to welcome them. Greeters do not audit credentials, demand entrance exams, or request secret handshakes. The virgin rings the brass bell, rolls in the playa dust, and hears the immediate declaration: <em>"Welcome Home!"</em> <sup><a href="#ref-1">[1]</a></sup></p>
+                <p>At a Burn, entry operations are split into two distinct, high-trust stages: <strong>Gate</strong> and <strong>Greeters</strong>.</p>
+                <p>Gate handles authentication and authorization: ticket validation, legal liability waivers, and wristbanding. Once authenticated through Gate, the participant arrives at Greeters. Here, operations pause to celebrate the stranger. Greeters do not audit credentials, demand entrance exams, or request secret handshakes. The first-time participant ("virgin") rings the brass bell, rolls in the playa dust, and hears the immediate declaration: <em>"Welcome Home!"</em> <sup><a href="#ref-1">[1]</a></sup></p>
                 <p>Contrast this with traditional enterprise software engineering.</p>
-                <p>Historically, industrial software engineering has operated under a toxic, unwritten ethos: <em>"Fuck you, I got mine. Good luck."</em> The industry erected steep economic and cultural paywalls: four-year CS degrees, proprietary $1,500 conference gates, and an elitist priesthood of senior maintainers who hoard tribal knowledge to protect their own irrelevancy <sup><a href="#ref-4">[4]</a></sup>.</p>
+                <p>Historically, industrial software engineering has operated under a toxic, unwritten ethos: <em>"Fuck you, I got mine. Good luck."</em> Enterprise IT conflated necessary authentication (repo access) with arbitrary gatekeeping, erecting steep economic and cultural paywalls: four-year CS degrees, proprietary $1,500 conference gates, and an elitist priesthood of senior maintainers who hoard tribal knowledge to protect their own irrelevancy <sup><a href="#ref-4">[4]</a></sup>.</p>
                 <p>For self-taught engineers from working-class backgrounds (who grew up tinkering on a Commodore 64 or a Windows 95 machine without rich families or well-funded libraries), breaking into tech meant running a brutal, unnecessary gauntlet.</p>
                 <p>Worse, when young, curious minds explore system boundaries without guidance, legacy institutions routinely punish curiosity as malice. When a 16-year-old kid in 1997 receives access to school email for the first time and sends a harmless encrypted string (<code>5...4...3...2...1...Boom!</code>), clueless authority figures vilify the student as a security threat rather than channeling that curiosity into safe, guarded sandboxes.</p>
                 <p>Radical Inclusion demands the total destruction of the engineering priesthood.</p>
@@ -51,17 +52,17 @@
 
                 <div class="sandman-visual-pipeline">
                     <div class="sandman-stage crowd-stage">
-                        <div class="stage-badge">GATEWAY</div>
+                        <div class="stage-badge">GATE</div>
                         <div class="stage-body">
-                            <div class="stage-title">New Contributor / Stranger Arrival</div>
-                            <div class="stage-sub">Zero Prerequisites / No Ancient Secret Passwords</div>
+                            <div class="stage-title">AuthN / AuthZ (Legal Check-In & Repo Access)</div>
+                            <div class="stage-sub">Validating Credentials & Permissions Warmly</div>
                         </div>
                     </div>
                     
                     <div class="pipeline-arrow">&darr; Single Command: ./agy-start.sh / wbw-daemon</div>
                     
                     <div class="sandman-stage perimeter-stage">
-                        <div class="stage-badge" style="background: rgba(37, 165, 95, 0.15); color: #4ade80; border-color: rgba(37, 165, 95, 0.3);">BOOTSTRAP</div>
+                        <div class="stage-badge" style="background: rgba(37, 165, 95, 0.15); color: #4ade80; border-color: rgba(37, 165, 95, 0.3);">GREETERS</div>
                         <div class="stage-body">
                             <div class="stage-title">Automated DevContainer & Agent Sandbox</div>
                             <div class="stage-sub">Self-Provisioning Container, Validated README & AI Pairing Assistant</div>
@@ -81,7 +82,7 @@
 
                 <h3>The Three Rules of Zero-Gatekeeper Architecture:</h3>
                 <ul>
-                    <li><strong>1. The Two-Syllable Gate (<code>wbw-daemon</code> / <code>agy-start.sh</code>):</strong> Onboarding must never require executing 40 manual setup steps or deciphering stale Confluence wikis. Onboarding must be a single, self-healing command. One script provisions the container, validates dependencies, mocks external services, and drops the developer directly into a working state.</li>
+                    <li><strong>1. The Two-Syllable Gate (<code>wbw-daemon</code> / <code>agy-start.sh</code>):</strong> Once authenticated, onboarding must never require executing 40 manual setup steps or deciphering stale Confluence wikis. Onboarding must be a single, self-healing command. One script provisions the container, validates dependencies, mocks external services, and drops the developer directly into a working state.</li>
                     <li><strong>2. AI Pairing as the Democratic Equalizer:</strong> Autonomous agent swarms act as the master mentor that self-taught engineers never had. An AI agent doesn't mock junior questions, hide tribal knowledge, or posture. It explains legacy monoliths, maps hidden class dependencies, and guides first-time contributors safely.</li>
                     <li><strong>3. Fearless Refactoring via Guarded Sandboxes:</strong> When local environments are isolated in reproducible containers backed by automated test suites, newcomers can refactor code without fear of blowing up their machine or breaking unrelated monolith subsystems.</li>
                 </ul>
