@@ -277,6 +277,27 @@ body.article-mode {
     color: #e0e7ff;
 }
 
+sup {
+    font-size: 0.75em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+sup a, sup a:visited {
+    color: var(--accent) !important;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    padding: 0 2px;
+
+    text-decoration: none;
+}
+
+sup a:hover {
+    color: #ffffff !important;
+    background: var(--accent);
+    border-radius: 3px;
+}
+
 /* Responsive Equation Pipeline Component */
 .equation-pipeline {
     display: flex;
