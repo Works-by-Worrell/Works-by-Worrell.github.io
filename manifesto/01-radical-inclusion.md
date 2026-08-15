@@ -52,7 +52,7 @@ To enforce Principle 1, autonomous architectures must guarantee **Frictionless O
 |   | GREETERS: AUTOMATED DEV CONTAINER & AGENT BOOTSTRAP       |   |
 |   | - Two-Syllable Execution Command: wbw-daemon               |   |
 |   | - Self-provisioning container sandbox (Zero VDI hell)    |   |
-|   | - Agent-validated README & live environment checks        |   |
+|   | - Self-hydrating DB: Auto-executes 000..nnn.sql seeds     |   |
 |   | - AI pairing assistant for codebase navigation            |   |
 |   +-----------------------------------------------------------+   |
 |                                 |                                 |
@@ -73,8 +73,10 @@ To enforce Principle 1, autonomous architectures must guarantee **Frictionless O
 
 Translating Radical Inclusion into enterprise architecture requires three concrete Staff-level practices:
 
-### A. Containerized Dev Environments (DevContainers & Nix)
-Destroy the "works on my machine" paradigm. Standardize all development environments using containerized definitions (`DevContainers`, `Docker Compose`, or `Nix`). A principal architect's environment and a Day 1 intern's environment must be bit-for-bit identical.
+### A. Self-Hydrating Container Sandboxes (DevContainers & Auto-Seeding)
+Destroy the "works on my machine" paradigm and manual database setup rituals. Standardize all development environments using containerized definitions (`DevContainers`, `Docker Compose`, or `Nix`). 
+
+On a fresh container start, if local persistent storage is uninitialized, automated entrypoint scripts capture tracked migration folders (`000_init.sql` ... `nnn_seed.sql`). The sandbox automatically provisions all schema, tables, and baseline seed data without human intervention. Adding a new database service requires simply dropping an ordered migration script into the repository track. A principal architect's local environment and a Day 1 intern's local environment remain bit-for-bit identical.
 
 ### B. Living, Agent-Validated Documentation
 Documentation rots the moment humans abandon it. Autonomous agents must validate onboarding scripts on every CI run. If `wbw-daemon` bootstrapping fails on a fresh container, the build panics. Documentation is executable code.
