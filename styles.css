@@ -288,7 +288,6 @@ sup a, sup a:visited {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 600;
     padding: 0 2px;
-
     text-decoration: none;
 }
 
@@ -296,6 +295,61 @@ sup a:hover {
     color: #ffffff !important;
     background: var(--accent);
     border-radius: 3px;
+}
+
+/* ASCII Terminal Schematic Window Component */
+.ascii-terminal-window {
+    margin: 2rem 0;
+    background: #05050a;
+    border: 1px solid rgba(94, 106, 210, 0.35);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 15px rgba(94, 106, 210, 0.1);
+}
+
+.ascii-header {
+    background: rgba(20, 20, 32, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+
+.ascii-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.ascii-body {
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 1.25rem 1.5rem !important;
+    color: #c4b5fd !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+    text-shadow: 0 0 10px rgba(167, 139, 250, 0.25);
 }
 
 /* Responsive Equation Pipeline Component */
