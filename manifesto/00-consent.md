@@ -8,23 +8,23 @@
 
 ## 1. The Burner Reality: Zero-Indexing Consent
 
-At regional burns like Interfuse and Freezerburn, Greeters often cover Consent as the "11th Principle"—an afterthought appended to the end of Larry Harvey's original ten. 
+At regional events like Interfuse and Freezerburn, Greeters traditionally cover Consent as the "11th Principle"—an afterthought appended to the tail of Larry Harvey's original ten <sup>[1](#ref-1)</sup>. 
 
-That order is fundamentally flawed. As engineers, we start counting at **Index 0**. 
+That order is structurally flawed. In software engineering and computer science, we index from **0**. 
 
-Consent is not a footnote; it is the zero-indexed foundation of human community. Radical Inclusion without Consent is trespass. Radical Self-Expression without Consent is assault. Communal Effort without Consent is exploitation. If Index 0 is compromised, every principle built on top of it collapses.
+Consent is not a footnote; it is the zero-indexed prerequisite of human community. Radical Inclusion without Consent is trespass. Radical Self-Expression without Consent is assault. Communal Effort without Consent is exploitation. When Index 0 is compromised, every downstream principle panics.
 
 ---
 
 ## 2. The Supply-Chain Sin: Upstream Consent & Scraped Provenance
 
-Consent in modern software and AI isn't just about what a system does to the end-user—it is about what the system swallowed to exist in the first place.
+Consent in modern software and autonomous AI systems isn't just about what an application does to the end-user—it is about what the system swallowed to exist in the first place.
 
 The rapid acceleration of generative AI and enterprise automation exposed a systemic, industry-wide failure of upstream consent:
 
-* **Model Vendors (OpenAI, Midjourney, Stability AI):** Ingested massive web crawls and creative archives without artist opt-in, compensation, or provenance tracking (*Andersen v. Stability AI*).
-* **Developer Ecosystems (GitHub Copilot / Microsoft):** Trained code models on millions of open-source repositories, bypassing copyleft licensing (GPL/AGPL) and attribution without developer opt-in (*Doe v. GitHub*).
-* **Platform & Enterprise Vendors (Meta, LinkedIn, Reddit, X):** Retroactively altered Terms of Service to automatically force user posts, code snippets, and interactions into model training pools by default (*NOYB GDPR Enforcement*).
+* **Model Vendors (OpenAI, Midjourney, Stability AI):** Ingested massive web crawls and creative archives without artist opt-in, compensation, or provenance tracking <sup>[6](#ref-6)</sup>.
+* **Developer Ecosystems (GitHub Copilot / Microsoft):** Trained code models on millions of open-source repositories, bypassing copyleft licensing (GPL/AGPL) and attribution without developer opt-in <sup>[7](#ref-7)</sup>.
+* **Platform & Enterprise Vendors (Meta, LinkedIn, Reddit, X):** Retroactively altered Terms of Service to automatically force user posts, code snippets, and interactions into model training pools by default <sup>[8](#ref-8)</sup>.
 
 When engineers consume these tools uncritically, they become unwitting accomplices in systemic, upstream consent violations.
 
@@ -37,7 +37,7 @@ When engineers consume these tools uncritically, they become unwitting accomplic
 Software engineering currently suffers from two opposing failures of consent:
 
 1. **Performative Lip-Service (Opt-Out Harassment):** 50-page Terms of Service agreements, cookie banners, and default-enabled telemetry that presume consent unless the user fights through submenus to disable it.
-2. **Decision Fatigue (The Rubber-Stamp Cascade):** Naïve Human-in-the-Loop systems that prompt the operator for every minor action destroy both productivity and **code quality**. When an engineer clicks "Approve" 50 times an hour, critical evaluation vanishes. Consent degrades into muscle-memory rubber-stamping. Engineers stop reading diffs, missing the "little things"—which compound into **not-little things** (production outages, data corruption, security breaches). Badly designed consent gates create a false illusion of safety while actively engineering quality collapse.
+2. **Decision Fatigue (The Rubber-Stamp Cascade):** Naïve Human-in-the-Loop implementations that prompt the operator for every minor action destroy both developer velocity and **code quality**. When an engineer clicks "Approve" 50 times an hour, critical evaluation vanishes. Consent degrades into muscle-memory rubber-stamping. Engineers stop reading diffs, missing the "little things"—which compound into catastrophic, system-wide failures. Badly designed consent gates create a dangerous illusion of safety while actively engineering quality collapse.
 
 ---
 
@@ -113,31 +113,31 @@ Translating Index 0 from manifesto to production engineering requires solving th
 ### A. Team Dynamics: "Silence is Not Consent" (Time-Boxed RFC Contracts)
 In toxic engineering cultures, senior engineers often rewrite core services or alter API schemas under the assumption that *"silence equals consent."* 
 
-**The Solution:** All structural changes require explicit, time-boxed **Request for Comments (RFC)** contracts. Silence is treated as an un-granted permission. If an RFC receives no explicit opt-in within the time-boxed window, the proposal dies. This combines the discipline of explicit consent with the speed of Dave Farley's iterative feedback loops (Immediacy), avoiding both steamrolling and committee paralysis (bikeshedding).
+**The Solution:** All structural changes require explicit, time-boxed **Request for Comments (RFC)** contracts. Silence is treated as an un-granted permission. If an RFC receives no explicit opt-in within the time-boxed window, the proposal dies. This combines the discipline of explicit consent with the speed of Dave Farley's iterative feedback loops (Immediacy) <sup>[2](#ref-2)</sup>, avoiding both steamrolling and committee paralysis (bikeshedding).
 
 ### B. Retrofitting Legacy Monoliths: The Placement Audit & Strangler Pattern
 You cannot enforce Index 0 on a 10-year-old monolith overnight without causing massive outages. 
 
 **The Solution:** Think like the **Placement & Principles Committee** at a Burn:
 1. **The Consent Audit (Placement Audit):** Catalog all legacy background jobs, root-privileged scripts, and un-monitored webhooks currently executing without explicit consent contracts.
-2. **The Strangler Fig Containment:** Wrap legacy un-consented services in API facade proxies that intercept and log boundary breaches without immediately tearing down production.
+2. **The Strangler Fig Containment:** Wrap legacy un-consented services in API facade proxies <sup>[5](#ref-5)</sup> that intercept and log boundary breaches without immediately tearing down production.
 3. **Incremental Migration:** Refactor isolated legacy services one by one into scoped, least-privilege sandboxes governed by explicit consent gates.
 
 ### C. Observability vs. Surveillance: The Principle of Least Privilege
 To run the Sandman Circuit Breaker, system observability is mandatory. However, observability easily degrades into consent-violating surveillance (recording user sessions, harvesting un-sanitized PII, logging developer keystrokes).
 
 **The Solution: Least-Privilege Telemetry.** 
-Observability tools are granted access strictly to **operational metadata** (CPU, memory, request rates, error latency)—never payload data, user credentials, or raw source code. Telemetry exists purely for operational safety (Sandman protection), never for secondary data harvesting or employee surveillance.
+Observability tools are granted access strictly to **operational metadata** (CPU, memory, request rates, error latency)—never payload data, user credentials, or raw source code <sup>[4](#ref-4)</sup>. Telemetry exists purely for operational safety (Sandman protection), never for secondary data harvesting or employee surveillance.
 
 ---
 
 ## 7. References & Canonical Citations
 
-1. **Harvey, Larry.** (2004). *The 10 Principles of Burning Man*. Burning Man Project.
-2. **Farley, Dave.** (2021). *Modern Software Engineering: Doing What Works to Make Software Better Faster*. Addison-Wesley Professional.
-3. **Farley, Dave, & Humble, Jez.** (2010). *Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation*. Addison-Wesley Professional.
-4. **Saltzer, Jerome H., & Schroeder, Michael D.** (1975). *The Protection of Information in Computer Systems*. Proceedings of the IEEE, 63(9), 1278-1308. *(Formulating the Principle of Least Privilege).*
-5. **Fowler, Martin.** (2004). *Strangler Fig Application*. [martinfowler.com/bliki/StranglerFigApplication.html](https://martinfowler.com/bliki/StranglerFigApplication.html).
-6. ***Andersen v. Stability AI Ltd. et al.*** (3:23-cv-00201, N.D. Cal. 2023). *(Class-action litigation on un-consented generative AI training).*
-7. ***Doe 1 v. GitHub, Inc. et al.*** (4:22-cv-05769, N.D. Cal. 2022). *(Class-action litigation on open-source code ingestion and copyleft license violations).*
-8. **NOYB – European Center for Digital Rights.** (2024). *GDPR Complaints Against Meta's Unlawful AI Data Scraping*. [noyb.eu](https://noyb.eu).
+<a id="ref-1"></a> 1. **Harvey, Larry.** (2004). *The 10 Principles of Burning Man*. Burning Man Project.  
+<a id="ref-2"></a> 2. **Farley, Dave.** (2021). *Modern Software Engineering: Doing What Works to Make Software Better Faster*. Addison-Wesley Professional.  
+<a id="ref-3"></a> 3. **Farley, Dave, & Humble, Jez.** (2010). *Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation*. Addison-Wesley Professional.  
+<a id="ref-4"></a> 4. **Saltzer, Jerome H., & Schroeder, Michael D.** (1975). *The Protection of Information in Computer Systems*. Proceedings of the IEEE, 63(9), 1278-1308. *(Formulating the Principle of Least Privilege).*  
+<a id="ref-5"></a> 5. **Fowler, Martin.** (2004). *Strangler Fig Application*. [martinfowler.com/bliki/StranglerFigApplication.html](https://martinfowler.com/bliki/StranglerFigApplication.html).  
+<a id="ref-6"></a> 6. ***Andersen v. Stability AI Ltd. et al.*** (3:23-cv-00201, N.D. Cal. 2023). *(Class-action litigation on un-consented generative AI training).*  
+<a id="ref-7"></a> 7. ***Doe 1 v. GitHub, Inc. et al.*** (4:22-cv-05769, N.D. Cal. 2022). *(Class-action litigation on open-source code ingestion and copyleft license violations).*  
+<a id="ref-8"></a> 8. **NOYB – European Center for Digital Rights.** (2024). *GDPR Complaints Against Meta's Unlawful AI Data Scraping*. [noyb.eu](https://noyb.eu).
