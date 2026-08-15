@@ -4,6 +4,8 @@
 
 *Part of the [11 Principles of Software Engineering Manifesto](./README.md).*
 
+> **Provenance & Methodology:** Synthesized through Socratic interrogation between human domain expertise (**Roger A. Worrell**) and autonomous LLM orchestration (**Daemon Swarm** / Antigravity). *Human conviction, agentic velocity.*
+
 ---
 
 ## 1. The Burner Reality: Zero-Indexing Consent

@@ -302,6 +302,45 @@ sup a:hover {
     border-radius: 3px;
 }
 
+/* Provenance & Methodology Disclaimer Component */
+.provenance-disclaimer {
+    margin: 1.75rem 0;
+    padding: 1.25rem 1.5rem;
+    background: rgba(94, 106, 210, 0.06);
+    border: 1px solid rgba(94, 106, 210, 0.25);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.provenance-disclaimer .disclaimer-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    text-transform: uppercase;
+}
+
+.provenance-disclaimer p {
+    margin-bottom: 0 !important;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.provenance-disclaimer p strong {
+    color: var(--text-main);
+}
+
+.provenance-disclaimer p em {
+    color: #4ade80;
+    font-style: normal;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88em;
+}
+
 /* Visual Diagram Components */
 .consent-sandbox-visual {
     margin: 2rem 0;
@@ -661,7 +700,7 @@ sup a:hover {
     }
 }
 
-/* Extra Mobile Padding & Scaling (< 480px, e.g. iPhone 12/13/14) */
+/* Extra Mobile Padding & Scaling (< 480px) */
 @media (max-width: 480px) {
     body.article-mode {
         padding: 1.25rem 0.5rem;
