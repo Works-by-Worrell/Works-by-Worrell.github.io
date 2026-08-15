@@ -2,6 +2,8 @@
 
 > *"Taking the desert social contract and empirical software engineering discipline to construct a battle-tested, human-centric architecture for autonomous systems."*
 
+*Authored by Roger A. Worrell (Hrothgar Warlock)*
+
 ---
 
 ## The Master Equation
