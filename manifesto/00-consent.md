@@ -22,9 +22,9 @@ Consent in modern software and AI isn't just about what a system does to the end
 
 The rapid acceleration of generative AI and enterprise automation exposed a systemic, industry-wide failure of upstream consent:
 
-* **Model Vendors (OpenAI, Midjourney, Stability AI):** Ingested massive web crawls and creative archives without artist opt-in, compensation, or provenance tracking.
-* **Developer Ecosystems (GitHub Copilot / Microsoft):** Trained code models on millions of open-source repositories, bypassing copyleft licensing (GPL/AGPL) and attribution without developer opt-in.
-* **Platform & Enterprise Vendors (Meta, LinkedIn, Reddit, X):** Retroactively altered Terms of Service to automatically force user posts, code snippets, and interactions into model training pools by default.
+* **Model Vendors (OpenAI, Midjourney, Stability AI):** Ingested massive web crawls and creative archives without artist opt-in, compensation, or provenance tracking (*Andersen v. Stability AI*).
+* **Developer Ecosystems (GitHub Copilot / Microsoft):** Trained code models on millions of open-source repositories, bypassing copyleft licensing (GPL/AGPL) and attribution without developer opt-in (*Doe v. GitHub*).
+* **Platform & Enterprise Vendors (Meta, LinkedIn, Reddit, X):** Retroactively altered Terms of Service to automatically force user posts, code snippets, and interactions into model training pools by default (*NOYB GDPR Enforcement*).
 
 When engineers consume these tools uncritically, they become unwitting accomplices in systemic, upstream consent violations.
 
@@ -138,3 +138,6 @@ Observability tools are granted access strictly to **operational metadata** (CPU
 3. **Farley, Dave, & Humble, Jez.** (2010). *Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation*. Addison-Wesley Professional.
 4. **Saltzer, Jerome H., & Schroeder, Michael D.** (1975). *The Protection of Information in Computer Systems*. Proceedings of the IEEE, 63(9), 1278-1308. *(Formulating the Principle of Least Privilege).*
 5. **Fowler, Martin.** (2004). *Strangler Fig Application*. [martinfowler.com/bliki/StranglerFigApplication.html](https://martinfowler.com/bliki/StranglerFigApplication.html).
+6. ***Andersen v. Stability AI Ltd. et al.*** (3:23-cv-00201, N.D. Cal. 2023). *(Class-action litigation on un-consented generative AI training).*
+7. ***Doe 1 v. GitHub, Inc. et al.*** (4:22-cv-05769, N.D. Cal. 2022). *(Class-action litigation on open-source code ingestion and copyleft license violations).*
+8. **NOYB – European Center for Digital Rights.** (2024). *GDPR Complaints Against Meta's Unlawful AI Data Scraping*. [noyb.eu](https://noyb.eu).
