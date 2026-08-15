@@ -20,9 +20,13 @@ Consent is not a footnote; it is the zero-indexed foundation of human community.
 
 Consent in modern software and AI isn't just about what a system does to the end-user—it is about what the system swallowed to exist in the first place.
 
-The rush toward generative AI built a massive ecosystem on systemic consent violations: scraping artists on DeviantArt, harvesting open-source repositories without attribution, and ingesting user data behind opaque corporate walls (e.g., Meta). 
+The rapid acceleration of generative AI and enterprise automation exposed a systemic, industry-wide failure of upstream consent:
 
-Engineers using these tools are often forced into becoming unwitting accomplices in upstream consent violations.
+* **Model Vendors (OpenAI, Midjourney, Stability AI):** Ingested massive web crawls and creative archives without artist opt-in, compensation, or provenance tracking.
+* **Developer Ecosystems (GitHub Copilot / Microsoft):** Trained code models on millions of open-source repositories, bypassing copyleft licensing (GPL/AGPL) and attribution without developer opt-in.
+* **Platform & Enterprise Vendors (Meta, LinkedIn, Reddit, X):** Retroactively altered Terms of Service to automatically force user posts, code snippets, and interactions into model training pools by default.
+
+When engineers consume these tools uncritically, they become unwitting accomplices in systemic, upstream consent violations.
 
 **The Architectural Rule:** **Upstream Provenance Matters.** An ethical autonomous architecture must respect supply-chain consent. Systems and agents must verify data provenance, open-source licensing, and explicit opt-in boundaries before ingesting or generating artifacts.
 
@@ -79,7 +83,7 @@ Tackling a runner physically violates that individual's immediate physical conse
 ```
 +-------------------------------------------------------------------+
 |                     THE SANDMAN ARCHITECTURE                      |
-|                                                              |
+|                                                                   |
 |   [ CROWD / NORMAL EXECUTION ]                                    |
 |              |                                                    |
 |              v                                                    |
