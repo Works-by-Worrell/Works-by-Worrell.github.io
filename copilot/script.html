@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speaker Script — GitHub Copilot: From "AI is Cool" to Useful Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: rgba(18, 24, 38, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-glow: 0 12px 36px 0 rgba(0, 0, 0, 0.45);
+      --accent: #10b981;
+      --accent-light: #34d399;
+      --accent-dim: rgba(16, 185, 129, 0.12);
+      --cyan: #06b6d4;
+      --cyan-light: #38bdf8;
+      --cyan-dim: rgba(6, 182, 212, 0.12);
+      --amber: #f59e0b;
+      --purple: #a855f7;
+      --text-bright: #ffffff;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --spoken-color: #ecfdf5;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+      padding-bottom: 5rem;
+    }
+
+    /* Fixed Header */
+    header.script-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 15, 25, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .header-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      text-transform: uppercase;
+    }
+
+    .header-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text-bright);
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background: var(--accent-dim);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: var(--accent-light);
+    }
+
+    .action-btn.primary {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: var(--accent-light);
+    }
+
+    /* Jump Bar */
+    .jump-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .jump-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .jump-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .jump-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-bright);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Main Container */
+    main.script-container {
+      max-width: 920px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+    }
+
+    /* Glass Cards */
+    .script-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--card-glow);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .script-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent);
+    }
+
+    /* Card Header */
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 1rem;
+    }
+
+    .slide-num-title {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .slide-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .slide-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .time-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--cyan);
+      background: var(--cyan-dim);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    /* Typography & Spoken Text */
+    .spoken-block {
+      background: rgba(16, 185, 129, 0.04);
+      border-left: 3px solid var(--accent);
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 1.15rem;
+      line-height: 1.75;
+      color: var(--spoken-color);
+      font-weight: 400;
+    }
+
+    .spoken-block p + p {
+      margin-top: 1rem;
+    }
+
+    .spoken-block strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    /* Cues & Transitions */
+    .cue-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text-bright);
+      margin: 0.5rem 0 0.25rem 0;
+    }
+
+    .cue-pill.click {
+      background: rgba(6, 182, 212, 0.12);
+      border-color: rgba(6, 182, 212, 0.3);
+      color: var(--cyan-light);
+    }
+
+    .cue-pill.transition {
+      background: rgba(168, 85, 247, 0.12);
+      border-color: rgba(168, 85, 247, 0.3);
+      color: #d8b4fe;
+    }
+
+    .cue-pill.takeaway {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.3);
+      color: #fcd34d;
+    }
+
+    .transition-box {
+      background: rgba(168, 85, 247, 0.05);
+      border-left: 3px solid var(--purple);
+      padding: 0.85rem 1.25rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.95rem;
+      color: #e9d5ff;
+      font-style: italic;
+    }
+
+    .prompt-box-script {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #6ee7b7;
+      line-height: 1.5;
+    }
+
+    /* Delivery Notes Banner */
+    .overview-hero-card {
+      background: radial-gradient(circle at 90% 20%, rgba(16, 185, 129, 0.1) 0%, rgba(18, 24, 38, 0.95) 80%);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .formula-tagline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      background: rgba(0, 0, 0, 0.35);
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--card-border);
+      text-align: center;
+    }
+
+    /* Checklist */
+    .checklist-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .checklist-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .checklist-list li strong {
+      color: var(--text-bright);
+    }
+
+    .check-icon {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-top-row { flex-direction: column; align-items: flex-start; }
+      .header-actions { width: 100%; justify-content: space-between; }
+      .spoken-block { font-size: 1.05rem; padding: 1rem; }
+      .slide-title { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="script-header">
+    <div class="header-top-row">
+      <div class="header-left">
+        <span class="brand-tag">SOVEREIGN RUST</span>
+        <span class="header-title">GitHub Copilot: Speaker Presentation Script</span>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="action-btn primary" title="Open Slideshow Deck">
+          <span>‹</span> Slideshow Deck
+        </a>
+        <a href="presentation-script.md" class="action-btn" title="View Markdown Script">
+          <span>📄</span> Raw Markdown
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Slide Jump Nav -->
+    <nav class="jump-bar">
+      <a href="#delivery-notes" class="jump-link">Notes</a>
+      <a href="#slide-1" class="jump-link">01 Overview</a>
+      <a href="#slide-2" class="jump-link">02 Bass Hook</a>
+      <a href="#slide-3" class="jump-link">03 Useful Question</a>
+      <a href="#slide-4" class="jump-link">04 In Front Of You</a>
+      <a href="#slide-5" class="jump-link">05 The Loop</a>
+      <a href="#slide-6" class="jump-link">06 Boundaries</a>
+      <a href="#slide-7" class="jump-link">07 Model Choice</a>
+      <a href="#slide-8" class="jump-link">08 Guardrails</a>
+      <a href="#slide-9" class="jump-link">09 Live Demo</a>
+      <a href="#slide-10" class="jump-link">10 Takeaways</a>
+      <a href="#checklist" class="jump-link">Checklist</a>
+    </nav>
+  </header>
+
+  <!-- Script Container -->
+  <main class="script-container">
+
+    <!-- Delivery Notes -->
+    <section id="delivery-notes" class="script-card overview-hero-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">BRIEFING PARAMETERS // FLIGHT DECK</div>
+          <h2 class="slide-title">GitHub Copilot: From “AI is cool” to useful work</h2>
+        </div>
+        <span class="time-badge">Target: 15 Minutes</span>
+      </div>
+
+      <p style="font-size: 1.05rem; color: var(--text-secondary);">
+        <strong>Audience:</strong> Engineers using terminal tools, IntelliJ, or VS Code.<br />
+        <strong>Deck Location:</strong> <code style="color: var(--accent-light);">/copilot/index.html</code>
+      </p>
+
+      <div class="formula-tagline">
+        Central Message: Copilot is most useful when the engineer provides context, sets boundaries, makes a focused request, and verifies the result.
+      </div>
+
+      <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
+        This is a practical introduction, not a feature tour. Keep the pace conversational and let the hook breathe. The deck uses a dark terminal theme. The hook slide is animated across 7 distinct reveal checkpoints.
+      </p>
+    </section>
+
+    <!-- Slide 1 -->
+    <section id="slide-1" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">SLIDE 01</div>
+          <h2 class="slide-title">From “AI is cool” to useful work</h2>
+        </div>
+        <span class="time-badge">0:00 – 0:45</span>
+      </div>
+
+      <div class="spoken-block">
+        <p>
+          “Thanks, everyone. This is a quick introduction to using GitHub Copilot in the tools we already use: the terminal, IntelliJ, and VS Code.
+        </p>
+        <p>
+          I am not going to cover every feature or promise that Copilot can do the work for us. Instead, we are going to look at one repeatable engineering loop: <strong>provide context, state the intent, make a focused change, and prove that the result is correct</strong>.
+        </p>
+        <p>
+          The goal is to leave with something you can try on a small task today.”
+        </p>
+      </div>
+
+      <div class="transition-box">
+        <strong>Transition:</strong> “Before we talk about useful work, let’s talk about why AI gets our attention in the first place.”
+      </div>
+    </section>
+
+    <!-- Slide 2 -->
+    <section id="slide-2" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">SLIDE 02 // THE BASS HOOK</div>
+          <h2 class="slide-title">Two words. Infinite interpretations.</h2>
+        </div>
+        <span class="time-badge">0:45 – 2:30 (7 Clicks)</span>
+      </div>
+
+      <!-- Click 1 -->
+      <div>
+        <span class="cue-pill click">CLICK 1 — ORIGINAL IMAGE REVEALED</span>
+        <div class="spoken-block">
+          <p>
+            “This is a picture of me with my first largemouth bass. Nothing particularly unusual: just a guy, a fish, and a suspiciously large fish scale.”
+          </p>
+        </div>
+      </div>
+
+      <!-- Click 2 -->
+      <div>
+        <span class="cue-pill click">CLICK 2 — "KIND OF RIDICULOUS" BADGE & PROMPT 1 REVEALED TOGETHER</span>
+        <div class="spoken-block">
+          <p>
+            “I gave Nano Banana this prompt:
+          </p>
+        </div>
+        <div class="prompt-box-script" style="margin: 0.5rem 0;">
+          “I’m going to be giving a quick 15-minute overview of how to use Copilot CLI for work. I’m going to open with an ‘AI is cool…’ bit. Can you take this picture of me with my very first largemouth bass and turn it into something kind of ridiculous?”
+        </div>
+        <div class="spoken-block">
+          <p>
+            That gives the tool context, the audience, the purpose, and a general direction.”
+          </p>
+        </div>
+      </div>
+
+      <!-- Click 3 -->
+      <div>
+        <span class="cue-pill click">CLICK 3 — KIND-OF-RIDICULOUS IMAGE REVEALED</span>
+        <div class="spoken-block">
+          <p>
+            “And this is what it came up with. It is already a little ridiculous, but it still has a recognizable relationship to the original request.
+          </p>
+          <p>
+            The request is not perfectly precise, but it gives the model something to work with. There is a subject, a use case, and a desired level of change.”
+          </p>
+        </div>
+      </div>
+
+      <!-- Click 4 -->
+      <div>
+        <span class="cue-pill click">CLICK 4 — "MORE RIDICULOUS" BADGE & PROMPT 2 ("MORE RIDICULOUS") REVEALED</span>
+        <div class="spoken-block">
+          <p>
+            “Then I asked it to go further. And this was the entire follow-up prompt: literally just <strong>‘more ridiculous’</strong>.”
+          </p>
+        </div>
+      </div>
+
+      <!-- Click 5 -->
+      <div>
+        <span class="cue-pill click">CLICK 5 — MORE-RIDICULOUS IMAGE REVEALED</span>
+        <div class="spoken-block">
+          <p>
+            “This is where the model became extremely enthusiastic. It added more screens, more hardware, more creatures, more visual noise, and generally more of everything.”
+          </p>
+        </div>
+      </div>
+
+      <!-- Click 6 -->
+      <div>
+        <span class="cue-pill takeaway">CLICK 6 — FIRST TAKEAWAY REVEALED</span>
+        <div class="spoken-block">
+          <p>
+            “The first prompt had context. The second prompt had almost none.”
+          </p>
+        </div>
+      </div>
+
+      <!-- Click 7 -->
+      <div>
+        <span class="cue-pill takeaway">CLICK 7 — FINAL TAKEAWAY REVEALED</span>
+        <div class="spoken-block">
+          <p>
+            “What does ‘more ridiculous’ mean to me? What does it mean to you? What does it mean to the model?
+          </p>
+          <p>
+            If we are not explicit with these tools, they will confidently fill in the gaps. They will turn the entropy up to 11 and leave us—the engineers in the real world—holding the bag.
+          </p>
+          <p>
+            That is the real lesson behind the joke. AI can generate something impressive. <strong>Useful work needs context and boundaries. Trustworthy work needs review and validation.</strong>”
+          </p>
+        </div>
+      </div>
+
+      <div class="transition-box">
+        <strong>Transition:</strong> “So the useful question is not what AI can do in general. It is what it can help us do today.”
+      </div>
+    </section>
+
+    <!-- Slide 3 -->
+    <section id="slide-3" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">SLIDE 03</div>
+          <h2 class="slide-title">The useful question is not “what can AI do?”</h2>
+        </div>
+        <span class="time-badge">2:30 – 3:45</span>
+      </div>
+
+      <div class="spoken-block">
+        <p>
+          “We all know AI can generate images, write stories, summarize meetings, and answer questions. That is the fun part, and it is a good way to get our attention.
+        </p>
+        <p>
+          The useful question is:
+        </p>
+        <p style="color: var(--accent-light); font-weight: 600; font-size: 1.25rem;">
+          > What can it help me do today that I already need to get done?
+        </p>
+        <p>
+          For engineering work, that might be explaining an unfamiliar class, finding where a behavior is implemented, drafting a focused test, or helping diagnose an error.
+        </p>
+        <p>
+          Copilot can help with those activities, but it does not own the requirement, the tradeoffs, or the final decision. <strong>The engineer still owns the result.</strong>”
+        </p>
+      </div>
+
+      <div class="transition-box">
+        <strong>Transition:</strong> “The good news is that Copilot is available in the places where we already do this work.”
+      </div>
+    </section>
+
+    <!-- Slide 4 -->
+    <section id="slide-4" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">SLIDE 04</div>
+          <h2 class="slide-title">Start in the tool already in front of you</h2>
+        </div>
+        <span class="time-badge">3:45 – 5:00</span>
+      </div>
+
+      <div class="spoken-block">
+        <p>
+          “Use the interface that matches the work.
+        </p>
+        <p>
+          In the <strong>terminal</strong>, Copilot CLI is useful for repository exploration, scripts, commands, and changes that need to be reviewed in a worktree.
+        </p>
+        <p>
+          In <strong>IntelliJ</strong>, it can help explain classes and collaborators, suggest focused tests, and work alongside compiler errors and IDE inspections.
+        </p>
+        <p>
+          In <strong>VS Code</strong>, it is useful for polyglot repositories, configuration, scripts, documentation, and the integrated terminal.
+        </p>
+        <p>
+          The interface changes, but the discipline does not. Start with a small task, provide the relevant context, inspect the result, and run the normal checks.”
+        </p>
+      </div>
+
+      <div class="transition-box">
+        <strong>Transition:</strong> “That discipline can be reduced to four steps.”
+      </div>
+    </section>
+
+    <!-- Slide 5 -->
+    <section id="slide-5" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">SLIDE 05 // THE OPERATIONAL LOOP</div>
+          <h2 class="slide-title">Context → intent → change → proof</h2>
+        </div>
+        <span class="time-badge">5:00 – 6:45</span>
+      </div>
+
+      <div class="spoken-block">
+        <p>
+          “This is the loop I recommend for almost every Copilot task.
+        </p>
+        <p>
+          First: <strong>context</strong>. Give it the relevant file, symbol, error, test, command output, version, and constraints. Do not assume it knows which part of the system matters.
+        </p>
+        <p>
+          Second: <strong>intent</strong>. State the desired behavior and the boundaries. Say what may change, what must not change, and whether editing is allowed.
+        </p>
+        <p>
+          Third: <strong>change</strong>. Ask for one focused, reviewable improvement. Broad prompts produce broad diffs.
+        </p>
+        <p>
+          Fourth: <strong>proof</strong>. Inspect the diff and run the smallest relevant test, lint, build, or type check.
+        </p>
+        <p>
+          This is not bureaucracy added around AI. It is the normal engineering process made explicit enough for another participant—whether human or model—to follow.”
+        </p>
+      </div>
+
+      <div class="transition-box">
+        <strong>Transition:</strong> “The most important part is often the wording of the boundary.”
+      </div>
+    </section>
+
+    <!-- Slide 6 -->
+    <section id="slide-6" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">SLIDE 06</div>
+          <h2 class="slide-title">Say what you mean—and what you do not mean</h2>
+        </div>
+        <span class="time-badge">6:45 – 8:15</span>
+      </div>
+
+      <div class="spoken-block">
+        <p>
+          “Here is a prompt with a useful boundary:
+        </p>
+      </div>
+      <div class="prompt-box-script">
+        “Explain how this request flows through the repository. Identify the relevant files and tests. Do not edit anything yet.”
+      </div>
+      <div class="spoken-block">
+        <p>
+          That prompt gives Copilot a job, a scope, an expected output, and a permission boundary. It can explore without silently changing the worktree.
+        </p>
+        <p>
+          Useful phrases include:
+        </p>
+        <p>
+          • <em>Explain this; do not edit files.</em><br />
+          • <em>Change only this behavior; do not refactor unrelated code.</em><br />
+          • <em>Preserve the public API and existing error handling.</em><br />
+          • <em>List assumptions and open questions before implementing.</em><br />
+          • <em>Run the smallest relevant check and report exactly what it verified.</em>
+        </p>
+        <p>
+          The point is not to write a giant prompt every time. The point is to make the important constraints visible.”
+        </p>
+      </div>
+
+      <div class="transition-box">
+        <strong>Transition:</strong> “There is another choice we make before or during a task: which model to use.”
+      </div>
+    </section>
+
+    <!-- Slide 7 -->
+    <section id="slide-7" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">SLIDE 07</div>
+          <h2 class="slide-title">Model choice is a tradeoff, not a leaderboard</h2>
+        </div>
+        <span class="time-badge">8:15 – 9:30</span>
+      </div>
+
+      <div class="spoken-block">
+        <p>
+          “When organizational credits are shared, model selection is a resource decision.
+        </p>
+        <p>
+          Use a <strong>fast, economical model</strong> for explanations, navigation, boilerplate, formatting, small edits, and routine tests.
+        </p>
+        <p>
+          Move to a <strong>more capable model</strong> when the task involves unfamiliar architecture, multiple files, difficult debugging, or competing constraints.
+        </p>
+        <p>
+          The strongest model is not automatically the best choice. A high-cost model cannot compensate for a vague requirement. Give the model complete, relevant context first, and use more capability when the task genuinely needs it.
+        </p>
+        <p>
+          The goal is not always choosing the strongest model. <strong>The goal is successful outcomes per credit.</strong>”
+        </p>
+      </div>
+
+      <div class="transition-box">
+        <strong>Transition:</strong> “Regardless of the model, there are some guardrails we should not outsource.”
+      </div>
+    </section>
+
+    <!-- Slide 8 -->
+    <section id="slide-8" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">SLIDE 08</div>
+          <h2 class="slide-title">Fluent does not mean correct</h2>
+        </div>
+        <span class="time-badge">9:30 – 10:45</span>
+      </div>
+
+      <div class="spoken-block">
+        <p>
+          “Copilot can sound certain while being wrong. Fluency is not proof.
+        </p>
+        <p>
+          Verify APIs, assumptions, edge cases, and whether generated tests actually prove the requirement.
+        </p>
+        <p>
+          Keep the scope small enough that you can review the diff. Broad prompts can produce broad changes that are difficult to understand.
+        </p>
+        <p>
+          Never paste secrets, tokens, customer data, or unnecessary proprietary content.
+        </p>
+        <p>
+          Review generated terminal commands before running them, especially commands that delete, overwrite, migrate, or modify shared resources.
+        </p>
+        <p>
+          And do not let Copilot silently decide architecture, product requirements, or security policy. <strong>Those decisions need accountable human ownership.</strong>”
+        </p>
+      </div>
+
+      <div class="transition-box">
+        <strong>Transition:</strong> “Let’s apply the loop to a small live example instead of watching a giant repository scan.”
+      </div>
+    </section>
+
+    <!-- Slide 9 -->
+    <section id="slide-9" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">SLIDE 09 // LIVE DEMO</div>
+          <h2 class="slide-title">A small demo beats a giant repository tour</h2>
+        </div>
+        <span class="time-badge">10:45 – 13:45</span>
+      </div>
+
+      <div class="spoken-block">
+        <p>
+          “For the demonstration, I am going to use one bounded slice of the repository. The objective is to orient Copilot, choose one small documentation improvement, make only that change, and verify it.
+        </p>
+        <p>
+          First, I ask:
+        </p>
+      </div>
+      <div class="prompt-box-script">
+        “Give me a concise map of this repository for a new engineer. Focus on the main services, entry points, and how to find the tests. Cite specific files. Do not edit anything. Call out anything you are uncertain about.”
+      </div>
+      <div class="spoken-block">
+        <p>
+          Notice that I asked for citations and explicitly prohibited edits. That makes the answer easier to check.
+        </p>
+        <p>
+          Next:
+        </p>
+      </div>
+      <div class="prompt-box-script">
+        “Based on that map, find one existing documentation gap that can be fixed without changing application code. Propose the smallest change first. Do not edit until I approve the proposed file and wording.”
+      </div>
+      <div class="spoken-block">
+        <p>
+          Again, I am separating exploration from permission to change. Once I approve the file and wording, I ask:
+        </p>
+      </div>
+      <div class="prompt-box-script">
+        “Make only the approved documentation change. Preserve the existing style. Do not modify source code, dependencies, generated files, or unrelated documentation. Show me a concise summary of the diff when finished.”
+      </div>
+      <div class="spoken-block">
+        <p>
+          Now I review the diff. I am checking whether it touched only the approved file, whether it invented commands or behavior, and whether the wording matches the repository.
+        </p>
+        <p>
+          Finally:
+        </p>
+      </div>
+      <div class="prompt-box-script">
+        “Verify this documentation change using the smallest appropriate check. If there is no documentation-specific check, inspect the diff for broken Markdown, incorrect paths, and unsupported claims. Report exactly what you verified and what remains uncertain.”
+      </div>
+      <div class="spoken-block">
+        <p>
+          That is the entire pattern: context, intent, change, proof. It is small enough to finish, and the result is reviewable.”
+        </p>
+        <p style="font-size: 0.95rem; color: var(--text-muted); font-style: italic;">
+          [Fallback note if CLI is slow: “The important part of this demonstration is the method, not the latency of the tool. I would rather show a bounded workflow and explain each decision than spend the session waiting for a broad scan.”]
+        </p>
+      </div>
+
+      <div class="transition-box">
+        <strong>Transition:</strong> “The same method applies whether the interface is a terminal, an IDE, or an editor.”
+      </div>
+    </section>
+
+    <!-- Slide 10 -->
+    <section id="slide-10" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">SLIDE 10 // FINALE</div>
+          <h2 class="slide-title">Keep the power. Supply the context.</h2>
+        </div>
+        <span class="time-badge">13:45 – 15:00</span>
+      </div>
+
+      <div class="spoken-block">
+        <p>
+          “The takeaway is simple:
+        </p>
+        <p>
+          <span class="cue-pill click">CLICK 1</span> <strong>Start small.</strong><br />
+          <span class="cue-pill click">CLICK 2</span> <strong>State the boundaries.</strong><br />
+          <span class="cue-pill click">CLICK 3</span> <strong>Review the result.</strong><br />
+          <span class="cue-pill click">CLICK 4</span> <strong>Run the checks.</strong>
+        </p>
+        <p>
+          Copilot is an engineer’s second set of eyes across a complicated system. It is not the person responsible for the result.
+        </p>
+        <p>
+          If you remember only one loop, remember:
+        </p>
+        <p style="color: var(--accent-light); font-weight: 700; font-size: 1.25rem;">
+          > Context → intent → change → proof.
+        </p>
+        <p>
+          Start with the tool already open in front of you and a small task you already need to complete. That is the fastest way to turn ‘AI is cool’ into useful, repeatable work.
+        </p>
+      </div>
+
+      <div>
+        <span class="cue-pill click">CLICK 5 — REVEAL DAVID S. PUMPKINS</span>
+        <div class="spoken-block">
+          <p>
+            “Thank you. Questions?”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rehearsal Checklist -->
+    <section id="checklist" class="script-card">
+      <div class="card-top">
+        <div class="slide-num-title">
+          <div class="slide-eyebrow">PRE-FLIGHT CHECK // FINAL DRILL</div>
+          <h2 class="slide-title">Quick Rehearsal Checklist</h2>
+        </div>
+        <span class="time-badge">Flight Ready</span>
+      </div>
+
+      <ul class="checklist-list">
+        <li><span class="check-icon">✔</span> <div><strong>Keep the hook under two minutes:</strong> including initial audience reaction.</div></li>
+        <li><span class="check-icon">✔</span> <div><strong>Pause before revealing the bare `more ridiculous` prompt:</strong> let the audience appreciate the contrast with prompt 1.</div></li>
+        <li><span class="check-icon">✔</span> <div><strong>Do not read every bullet on slides 3, 4, or 8:</strong> use them as visual anchors while speaking naturally.</div></li>
+        <li><span class="check-icon">✔</span> <div><strong>Rehearse the live demo:</strong> have a known fallback explanation ready in case of CLI latency.</div></li>
+        <li><span class="check-icon">✔</span> <div><strong>Keep the final loop visible during Q&A:</strong> leaves the durable operational pattern in everyone's minds.</div></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <script>
+    // Keyboard shortcut: Escape or 's' returns to slideshow deck
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 's' || e.key === 'S') {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>

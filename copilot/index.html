@@ -1,0 +1,2628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Copilot: From "AI is Cool" to Useful Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: rgba(18, 24, 38, 0.85);
+      --card-bg-subtle: rgba(22, 30, 48, 0.6);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-border-glow: rgba(16, 185, 129, 0.35);
+      --card-glow: 0 12px 36px 0 rgba(0, 0, 0, 0.45);
+      --accent: #10b981;
+      --accent-light: #34d399;
+      --accent-dim: rgba(16, 185, 129, 0.12);
+      --cyan: #06b6d4;
+      --cyan-light: #38bdf8;
+      --cyan-dim: rgba(6, 182, 212, 0.12);
+      --amber: #f59e0b;
+      --amber-dim: rgba(245, 158, 11, 0.12);
+      --purple: #a855f7;
+      --purple-dim: rgba(168, 85, 247, 0.12);
+      --red: #ef4444;
+      --red-dim: rgba(239, 68, 68, 0.12);
+      --text-bright: #ffffff;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --header-height: 56px;
+      --footer-height: 38px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.09) 0%, transparent 65%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+    }
+
+    /* Top Progress Bar */
+    .top-progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.05);
+      z-index: 100;
+    }
+
+    .top-progress-bar {
+      height: 100%;
+      width: 10%;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--cyan) 100%);
+      box-shadow: 0 0 12px var(--accent);
+      transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Header */
+    header.deck-header {
+      height: var(--header-height);
+      min-height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      z-index: 50;
+      margin-top: 3px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulseGlow 2.5s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.9); }
+    }
+
+    .brand-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--accent-dim);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .deck-title-text {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .header-center {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .active-slide-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .step-pill-track {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 3px 8px;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+    }
+
+    .step-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.25s ease;
+    }
+
+    .step-dot.active {
+      background: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan);
+      transform: scale(1.3);
+    }
+
+    .step-dot.passed {
+      background: var(--accent);
+    }
+
+    .step-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-left: 4px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .counter-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
+    }
+
+    .header-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .header-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-bright);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .header-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Deck Viewport & Slides */
+    main.deck-viewport {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      height: calc(100vh - var(--header-height) - var(--footer-height) - 3px);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transform: translateY(12px) scale(0.99);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1.25rem 2.5rem;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      z-index: 10;
+    }
+
+    .slide-inner {
+      width: 100%;
+      max-width: 1440px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.15rem;
+    }
+
+    /* Common Slide Typography & Elements */
+    .slide-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-eyebrow::before {
+      content: '//';
+      color: var(--cyan);
+      opacity: 0.8;
+    }
+
+    .slide-headline {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-headline span.highlight {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .slide-lead {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      line-height: 1.45;
+      max-width: 900px;
+    }
+
+    /* Glass Cards */
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--card-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+    }
+
+    /* Badges & Tags */
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-emerald {
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-cyan {
+      background: var(--cyan-dim);
+      color: var(--cyan);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+
+    .badge-amber {
+      background: var(--amber-dim);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .badge-purple {
+      background: var(--purple-dim);
+      color: var(--purple);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .badge-muted {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      border: 1px solid var(--card-border);
+    }
+
+    /* Stepped visibility classes */
+    .step-target {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .step-target.revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    /* ========================================================
+       SLIDE 1: Title & Overview
+       ======================================================== */
+    .slide1-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .slide1-hero-box {
+      padding: 2rem 2.5rem;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      background: radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.08) 0%, rgba(18, 24, 38, 0.95) 75%);
+    }
+
+    .slide1-hero-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .hero-loop-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+      padding: 0.6rem 1rem;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--card-border);
+      width: fit-content;
+    }
+
+    .loop-node {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+    }
+
+    .loop-arrow {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .slide1-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .overview-card {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .overview-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .overview-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* ========================================================
+       SLIDE 2: Bass Hook (9 discrete steps)
+       ======================================================== */
+    .slide2-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      height: 100%;
+      justify-content: space-between;
+      max-width: 1680px;
+      width: 100%;
+    }
+
+    .slide2-container .slide-header {
+      gap: 0.15rem;
+    }
+
+    .slide2-container .slide-headline {
+      font-size: 1.75rem;
+      line-height: 1.1;
+    }
+
+    .slide2-container .slide-lead {
+      font-size: 0.85rem;
+      line-height: 1.25;
+    }
+
+    .slide2-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    .bass-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex: 1;
+      min-height: 0;
+      height: 100%;
+    }
+
+    .col-header-box {
+      height: 24px;
+      min-height: 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    .image-card-frame {
+      background: #070a12;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex: 1;
+      min-height: 380px;
+      height: 530px;
+      max-height: 59vh;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .image-card-frame .step-target {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-card-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .image-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(14, 20, 32, 0.9);
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      transition: opacity 0.3s ease;
+    }
+
+    .image-placeholder.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .prompt-box {
+      background: rgba(18, 24, 38, 0.85);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 0.35rem 0.55rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+      font-size: 0.74rem;
+      line-height: 1.25;
+    }
+
+    .prompt-box .prompt-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.64rem;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .prompt-box.warn .prompt-label {
+      color: var(--amber);
+    }
+
+    .prompt-box p {
+      color: var(--text-primary);
+      font-style: italic;
+    }
+
+    .prompt-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 1px;
+    }
+
+    .tag-sm {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      padding: 1px 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+      color: var(--text-secondary);
+    }
+
+    .tag-sm.danger {
+      background: rgba(239, 68, 68, 0.12);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+
+    /* Slide 2 Takeaways Dock */
+    .slide2-takeaways-dock {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-height: auto;
+    }
+
+    .takeaway-banner {
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(18, 24, 38, 0.95);
+      border: 1px solid var(--card-border);
+    }
+
+    .takeaway-banner.step6,
+    .takeaway-banner.step8 {
+      border-left: 4px solid var(--cyan);
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .takeaway-banner.step7,
+    .takeaway-banner.step9 {
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      background: radial-gradient(circle at 10% 50%, rgba(16, 185, 129, 0.12) 0%, rgba(18, 24, 38, 0.98) 70%);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.15rem;
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.12);
+      padding: 0.4rem 0.9rem;
+    }
+
+    .step9-quote {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.25;
+    }
+    .step9-sub {
+      font-size: 0.74rem;
+      color: var(--accent-light);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ========================================================
+       SLIDE 3: The Useful Question
+       ======================================================== */
+    .slide3-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 1.5rem;
+    }
+
+    .hero-quote-card {
+      grid-column: 1 / -1;
+      padding: 1.25rem 1.75rem;
+      background: radial-gradient(circle at 5% 50%, rgba(6, 182, 212, 0.15) 0%, rgba(18, 24, 38, 0.9) 80%);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .quote-mark {
+      font-size: 2.75rem;
+      line-height: 1;
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+      opacity: 0.8;
+    }
+
+    .hero-quote-text {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: -0.01em;
+    }
+
+    .compare-card {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .compare-card.fun {
+      border-top: 3px solid var(--text-muted);
+    }
+
+    .compare-card.work {
+      border-top: 3px solid var(--accent);
+      background: radial-gradient(circle at 90% 10%, rgba(16, 185, 129, 0.08) 0%, rgba(18, 24, 38, 0.88) 70%);
+    }
+
+    .compare-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .compare-list li {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      line-height: 1.4;
+    }
+
+    .compare-list li strong {
+      color: var(--text-primary);
+    }
+
+    .bullet-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 0.8rem;
+      margin-top: 2px;
+    }
+
+    .compare-card.fun .bullet-icon { color: var(--text-muted); }
+    .compare-card.work .bullet-icon { color: var(--accent); }
+
+    .slide3-footer-banner {
+      grid-column: 1 / -1;
+      padding: 0.85rem 1.25rem;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--card-border);
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* ========================================================
+       SLIDE 4: Start In The Tool In Front Of You
+       ======================================================== */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .tool-card {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      border-top: 3px solid var(--cyan);
+    }
+
+    .tool-card.intellij {
+      border-top-color: var(--purple);
+    }
+
+    .tool-card.vscode {
+      border-top-color: var(--accent);
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tool-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .tool-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+    }
+
+    .tool-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.35;
+    }
+
+    .tool-prompt-snippet {
+      margin-top: auto;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent-light);
+      line-height: 1.35;
+    }
+
+    .tool-prompt-snippet::before {
+      content: '$ starter-prompt:';
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.68rem;
+      margin-bottom: 3px;
+    }
+
+    .slide4-dock {
+      padding: 0.85rem 1.5rem;
+      background: rgba(18, 24, 38, 0.7);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    /* ========================================================
+       SLIDE 5: The Repeatable Workflow (4-stage cards)
+       ======================================================== */
+    .loop-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .workflow-step-card {
+      padding: 1.4rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      position: relative;
+    }
+
+    .workflow-step-card.c1 { border-top: 3px solid var(--accent); }
+    .workflow-step-card.c2 { border-top: 3px solid var(--cyan); }
+    .workflow-step-card.c3 { border-top: 3px solid var(--amber); }
+    .workflow-step-card.c4 { border-top: 3px solid var(--purple); }
+
+    .step-badge-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .workflow-step-card.c1 .step-badge-num { color: var(--accent); }
+    .workflow-step-card.c2 .step-badge-num { color: var(--cyan); }
+    .workflow-step-card.c3 .step-badge-num { color: var(--amber); }
+    .workflow-step-card.c4 .step-badge-num { color: var(--purple); }
+
+    .step-card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: -0.01em;
+    }
+
+    .step-card-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+
+    .step-card-bullets li strong {
+      color: var(--text-primary);
+    }
+
+    .step-card-rule {
+      margin-top: auto;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .slide5-banner {
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at 10% 50%, rgba(16, 185, 129, 0.1) 0%, rgba(18, 24, 38, 0.9) 75%);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* ========================================================
+       SLIDE 6: Say What You Mean (Terminal & Boundary Arsenal)
+       ======================================================== */
+    .slide6-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 1.25rem;
+    }
+
+    .terminal-window {
+      background: #070a12;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .terminal-topbar {
+      height: 32px;
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 8px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .window-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .terminal-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-left: 6px;
+    }
+
+    .terminal-body {
+      padding: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .terminal-prompt-line {
+      color: var(--text-muted);
+    }
+
+    .terminal-cmd {
+      color: var(--cyan);
+    }
+
+    .terminal-str {
+      color: #a7f3d0;
+      background: rgba(16, 185, 129, 0.08);
+      padding: 6px 10px;
+      border-radius: 4px;
+      border-left: 2px solid var(--accent);
+      display: block;
+      margin: 4px 0;
+    }
+
+    .terminal-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 0.5rem;
+    }
+
+    .boundaries-arsenal {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .boundary-phrase-card {
+      padding: 0.75rem 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .boundary-phrase-card.danger {
+      border-left-color: var(--amber);
+    }
+
+    .phrase-quote {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .phrase-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    /* ========================================================
+       SLIDE 7: Model Choice Is A Tradeoff
+       ======================================================== */
+    .models-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .model-col-card {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      border-radius: var(--radius-md);
+    }
+
+    .model-col-card.fast {
+      border-top: 3px solid var(--cyan);
+      background: radial-gradient(circle at 10% 10%, rgba(6, 182, 212, 0.08) 0%, rgba(18, 24, 38, 0.9) 70%);
+    }
+
+    .model-col-card.capable {
+      border-top: 3px solid var(--purple);
+      background: radial-gradient(circle at 90% 10%, rgba(168, 85, 247, 0.08) 0%, rgba(18, 24, 38, 0.9) 70%);
+    }
+
+    .model-header-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .model-type-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-bright);
+    }
+
+    .model-subnames {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .model-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--card-border);
+    }
+
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .metric-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .metric-val {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .model-tasks-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .model-tasks-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .slide7-rule-banner {
+      grid-column: 1 / -1;
+      padding: 1rem 1.5rem;
+      background: rgba(18, 24, 38, 0.9);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .rule-banner-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    /* ========================================================
+       SLIDE 8: Fluent Does Not Mean Correct (Guardrails)
+       ======================================================== */
+    .guardrails-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.15rem;
+    }
+
+    .guardrail-card {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      border-left: 3px solid var(--red);
+      background: rgba(18, 24, 38, 0.8);
+    }
+
+    .guardrail-card.warn {
+      border-left-color: var(--amber);
+    }
+
+    .guardrail-card.accent {
+      border-left-color: var(--cyan);
+    }
+
+    .guardrail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .guardrail-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .guardrail-desc {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .slide8-anchor-bar {
+      padding: 0.9rem 1.5rem;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.92rem;
+      color: #fecaca;
+    }
+
+    /* ========================================================
+       SLIDE 9: Bounded Demo Workflow
+       ======================================================== */
+    .demo-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .demo-step-card {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+    }
+
+    .demo-step-card.active-stage {
+      border-color: rgba(16, 185, 129, 0.35);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+    }
+
+    .demo-step-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .demo-step-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .demo-prompt-box {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem;
+      color: #6ee7b7;
+      line-height: 1.35;
+    }
+
+    .demo-discipline-note {
+      margin-top: auto;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.35;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .slide9-bottom-callout {
+      padding: 0.9rem 1.5rem;
+      background: rgba(18, 24, 38, 0.85);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* ========================================================
+       SLIDE 10: Keep The Power & David S. Pumpkins (5 steps)
+       ======================================================== */
+    .slide10-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Step 1-4 Takeaways */
+    .slide10-takeaways {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    .slide10-takeaways.hidden-finale {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.96);
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .takeaways-quad-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    .takeaway-quad-card {
+      padding: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      border-radius: var(--radius-md);
+    }
+
+    .quad-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      opacity: 0.9;
+    }
+
+    .quad-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .quad-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .quad-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .slide10-central-formula {
+      padding: 1.25rem 2rem;
+      background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.12) 0%, rgba(18, 24, 38, 0.95) 75%);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
+    }
+
+    .formula-tagline {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    /* Step 5 Finale: David S. Pumpkins */
+    .slide10-pumpkins {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide10-pumpkins.visible-finale {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    .pumpkins-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1.25rem 2.5rem;
+      background: rgba(18, 24, 38, 0.95);
+      border: 2px solid rgba(16, 185, 129, 0.4);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 0 60px rgba(16, 185, 129, 0.25), 0 20px 40px rgba(0, 0, 0, 0.8);
+      max-width: 880px;
+      text-align: center;
+    }
+
+    .pumpkins-media-frame {
+      width: 460px;
+      height: 460px;
+      max-width: min(460px, 48vh);
+      max-height: min(460px, 48vh);
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.35);
+      background: #070a12;
+    }
+
+    .pumpkins-media-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .pumpkins-title {
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: var(--text-bright);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent-light) 50%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .pumpkins-catchphrase {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+    }
+
+    .pumpkins-catchphrase span {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .pumpkins-reminder {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.25rem;
+    }
+
+    /* Footer */
+    footer.deck-footer {
+      height: var(--footer-height);
+      min-height: var(--footer-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      background: rgba(11, 15, 25, 0.85);
+      border-top: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      z-index: 50;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .footer-center {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .key-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+    }
+
+    /* Responsive scaling */
+    @media (max-width: 1200px) {
+      .slide-headline { font-size: 1.85rem; }
+      .slide1-cards-grid, .tools-grid, .guardrails-grid { grid-template-columns: repeat(2, 1fr); }
+      .loop-grid-4, .demo-steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .pumpkins-media-frame { width: 360px; height: 360px; }
+      .pumpkins-title { font-size: 2.2rem; }
+    }
+
+    @media (max-height: 800px) {
+      .slide-inner { gap: 0.65rem; }
+      .slide1-hero-box { padding: 1.25rem 1.75rem; }
+      .image-card-frame { max-height: 52vh; height: auto; min-height: 300px; }
+      .pumpkins-media-frame { width: 340px; height: 340px; max-height: 45vh; max-width: 45vh; }
+      .pumpkins-card { padding: 1rem 1.75rem; gap: 0.65rem; }
+      .pumpkins-title { font-size: 2rem; }
+      .slide-headline { font-size: 1.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div class="top-progress-container">
+    <div id="topProgressBar" class="top-progress-bar"></div>
+  </div>
+
+  <!-- Deck Header -->
+  <header class="deck-header">
+    <div class="header-left">
+      <div class="status-dot"></div>
+      <div class="brand-tag">SOVEREIGN RUST</div>
+      <div class="deck-title-text">GitHub Copilot: From "AI is Cool" to Useful Work</div>
+    </div>
+
+    <div class="header-center">
+      <div id="activeSlideTitle" class="active-slide-title">01. Overview</div>
+      <div id="stepIndicatorContainer" class="step-pill-track" style="display: none;">
+        <!-- Step dots dynamically injected -->
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div id="slideCounter" class="counter-badge">01 / 10</div>
+      <a href="script.html" class="header-btn" title="View Speaker Script (S)" style="text-decoration: none;">
+        <span>📜</span> Script
+      </a>
+      <button id="btnPrev" class="header-btn" title="Previous (Left Arrow / PageUp)">
+        <span>‹</span> Prev
+      </button>
+      <button id="btnNext" class="header-btn" title="Next (Right Arrow / Space / PageDown)">
+        Next <span>›</span>
+      </button>
+      <button id="btnFullscreen" class="header-btn" title="Toggle Fullscreen (F)">
+        <span>⛶</span> Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Deck Viewport -->
+  <main class="deck-viewport" id="deckViewport">
+
+    <!-- ========================================================
+         SLIDE 1: Title / Orientation
+         ======================================================== -->
+    <section class="slide active" data-slide-index="0" data-slide-title="01. From “AI is Cool” to Useful Work" data-steps="1" data-time="0:00–0:45">
+      <div class="slide-inner slide1-layout">
+        <div class="glass-card slide1-hero-box">
+          <div class="slide1-hero-header">
+            <div class="section-eyebrow">PRACTICAL BRIEFING // 15 MINUTES</div>
+            <div class="badge badge-emerald">TERMINAL • INTELLIJ • VS CODE</div>
+          </div>
+          <h1 class="slide-headline">
+            GitHub Copilot: From <span class="highlight">“AI is Cool”</span> to Useful Work
+          </h1>
+          <p class="slide-lead">
+            A disciplined, repeatable engineering loop for your existing development environment. Not a feature tour—a reliable habit for shipping correct software today.
+          </p>
+          <div class="hero-loop-bar">
+            <span class="loop-node badge-emerald">01 CONTEXT</span>
+            <span class="loop-arrow">➔</span>
+            <span class="loop-node badge-cyan">02 INTENT</span>
+            <span class="loop-arrow">➔</span>
+            <span class="loop-node badge-amber">03 CHANGE</span>
+            <span class="loop-arrow">➔</span>
+            <span class="loop-node badge-purple">04 PROOF</span>
+          </div>
+        </div>
+
+        <div class="slide1-cards-grid">
+          <div class="glass-card overview-card">
+            <h3><span class="badge badge-muted">01</span> Not A Feature Tour</h3>
+            <p>
+              We are not covering every experimental toggle or claiming AI writes production systems for us. We focus on how an engineer directs the tool.
+            </p>
+          </div>
+          <div class="glass-card overview-card">
+            <h3><span class="badge badge-emerald">02</span> The Engineering Loop</h3>
+            <p>
+              Provide context, declare boundary intent, execute a focused change, and verify correctness with real tests and linters.
+            </p>
+          </div>
+          <div class="glass-card overview-card">
+            <h3><span class="badge badge-cyan">03</span> Ready For Flight Today</h3>
+            <p>
+              Walk away with a bounded, reviewable technique you can execute immediately on a small task in your active worktree.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 2: Bass Hook (7 discrete advance steps)
+         ======================================================== -->
+    <section class="slide" data-slide-index="1" data-slide-title="02. Two Words. Infinite Interpretations." data-steps="7" data-time="0:45–2:30">
+      <div class="slide-inner slide2-container">
+        <div class="slide-header">
+          <div class="section-eyebrow">THE HOOK // STEPWISE REVELATION</div>
+          <h2 class="slide-headline">Two Words. <span class="highlight">Infinite Interpretations.</span></h2>
+          <p class="slide-lead">What happens when prompt boundaries vanish: The Bass Hook.</p>
+        </div>
+
+        <div class="slide2-grid">
+          <!-- Column 1: Original (Step 1) -->
+          <div class="bass-col">
+            <div class="col-header-box">
+              <span class="badge badge-muted">STEP 1: BASE ARTIFACT</span>
+            </div>
+            <div class="image-card-frame">
+              <img src="002-01_origina.jpg" alt="Original Bass Photo" />
+            </div>
+            <div class="prompt-box">
+              <div class="prompt-label">The Baseline Subject</div>
+              <p>“Just a guy, a fish, and a suspiciously large fish scale.”</p>
+              <div class="prompt-tags">
+                <span class="tag-sm">Real World Photo</span>
+                <span class="tag-sm">Clear Ground Truth</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Kind of Ridiculous (Prompt & Badge: Step 2, Image: Step 3) -->
+          <div class="bass-col">
+            <div class="col-header-box">
+              <div class="step-target" data-min-step="2">
+                <span class="badge badge-emerald">STEP 2: "KIND OF RIDICULOUS"</span>
+              </div>
+            </div>
+            <div class="image-card-frame">
+              <div class="image-placeholder" id="placeholderStep3">
+                <span>[ Step 3: Awaiting Generation ]</span>
+              </div>
+              <div class="step-target" data-min-step="3" style="width:100%; height:100%;">
+                <img src="002-02_kinda-ridiculous.jpg" alt="Kind of Ridiculous Bass" />
+              </div>
+            </div>
+            <div class="step-target prompt-box" data-min-step="2">
+              <div class="prompt-label">Step 2: Prompt 1 (With Context)</div>
+              <p>“I’m giving a quick 15-min Copilot CLI overview. Opening with an ‘AI is cool’ bit. Turn this picture of me and my first bass into something kind of ridiculous?”</p>
+              <div class="prompt-tags">
+                <span class="tag-sm">Audience: Engineers</span>
+                <span class="tag-sm">Topic: CLI Talk</span>
+                <span class="tag-sm">Bounded Intent</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 3: More Ridiculous (Prompt & Badge: Step 4, Image: Step 5) -->
+          <div class="bass-col">
+            <div class="col-header-box">
+              <div class="step-target" data-min-step="4">
+                <span class="badge badge-amber">STEP 4: "MORE RIDICULOUS"</span>
+              </div>
+            </div>
+            <div class="image-card-frame">
+              <div class="image-placeholder" id="placeholderStep5">
+                <span>[ Step 5: Follow-Up Escalation ]</span>
+              </div>
+              <div class="step-target" data-min-step="5" style="width:100%; height:100%;">
+                <img src="002-03_more-ridiculous.jpg" alt="More Ridiculous Bass" />
+              </div>
+            </div>
+            <div class="step-target prompt-box warn" data-min-step="4">
+              <div class="prompt-label">Step 4: Prompt 2 (Two Words)</div>
+              <p>“more ridiculous”</p>
+              <div class="prompt-tags">
+                <span class="tag-sm danger">Context: NONE</span>
+                <span class="tag-sm danger">Boundaries: NONE</span>
+                <span class="tag-sm danger">Entropy: 11</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Takeaways Dock (Steps 6, 7) -->
+        <div class="slide2-takeaways-dock">
+          <div class="step-target takeaway-banner step6" data-min-step="6">
+            <div>💡 <strong>Step 6 Takeaway:</strong> The first prompt had context. The second prompt had almost none.</div>
+          </div>
+          <div class="step-target takeaway-banner step7" data-min-step="7">
+            <div class="step9-quote">
+              “What does ‘more ridiculous’ mean to me? What does it mean to the model? If we are not explicit, the model turns entropy to 11 and leaves us holding the bag.”
+            </div>
+            <div class="step9-sub">
+              AI generates impressive novelty. Useful work requires context and boundaries. Trustworthy work demands review and validation.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 3: The Useful Question
+         ======================================================== -->
+    <section class="slide" data-slide-index="2" data-slide-title="03. The Useful Question" data-steps="1" data-time="2:30–3:45">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <div class="section-eyebrow">PERSPECTIVE SHIFT // NOVELTY VS VALUE</div>
+          <h2 class="slide-headline">The Useful Question Is Not <span class="highlight">“What Can AI Do?”</span></h2>
+          <p class="slide-lead">Shift focus from generalized AI capability to concrete engineering acceleration.</p>
+        </div>
+
+        <div class="slide3-grid">
+          <div class="hero-quote-card">
+            <div class="quote-mark">“</div>
+            <div class="hero-quote-text">
+              What can it help me do today that I already need to get done?
+            </div>
+          </div>
+
+          <div class="glass-card compare-card fun">
+            <div class="badge badge-muted">THE NOVELTY TRAP ("AI IS COOL")</div>
+            <ul class="compare-list">
+              <li><span class="bullet-icon">✕</span> <div><strong>Generating surreal imagery</strong> and synthetic stories for amusement.</div></li>
+              <li><span class="bullet-icon">✕</span> <div><strong>Broad conversational chatter</strong> that lacks domain precision.</div></li>
+              <li><span class="bullet-icon">✕</span> <div><strong>Novelty forgives inaccuracies:</strong> hallucinations are seen as creative quirks.</div></li>
+            </ul>
+          </div>
+
+          <div class="glass-card compare-card work">
+            <div class="badge badge-emerald">PRODUCTION ENGINEERING ("USEFUL WORK")</div>
+            <ul class="compare-list">
+              <li><span class="bullet-icon">✔</span> <div><strong>Explaining unfamiliar classes:</strong> deciphering execution flow in legacy code.</div></li>
+              <li><span class="bullet-icon">✔</span> <div><strong>Locating implementations:</strong> finding relevant services without grep fatigue.</div></li>
+              <li><span class="bullet-icon">✔</span> <div><strong>Drafting focused tests:</strong> covering tricky edge-cases matching repo idioms.</div></li>
+              <li><span class="bullet-icon">✔</span> <div><strong>Diagnosing error traces:</strong> interpreting complex stack traces and failures.</div></li>
+            </ul>
+          </div>
+
+          <div class="slide3-footer-banner">
+            <span class="badge badge-cyan">THE CORE PRINCIPLE</span>
+            <span>Copilot does not own the requirements, the architectural tradeoffs, or the final decision. <strong>The engineer still owns the result.</strong></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 4: Start In The Tool In Front Of You
+         ======================================================== -->
+    <section class="slide" data-slide-index="3" data-slide-title="04. Start In The Tool In Front Of You" data-steps="1" data-time="3:45–5:00">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <div class="section-eyebrow">ENVIRONMENT INTEGRATION // MATCH THE INTERFACE</div>
+          <h2 class="slide-headline">Start In The Tool <span class="highlight">Already In Front Of You</span></h2>
+          <p class="slide-lead">Use the interface that matches the work. The discipline does not change.</p>
+        </div>
+
+        <div class="tools-grid">
+          <!-- Terminal -->
+          <div class="glass-card tool-card">
+            <div class="tool-header">
+              <div class="tool-title">Terminal // CLI</div>
+              <span class="badge badge-cyan">COPILOT CLI</span>
+            </div>
+            <ul class="tool-features">
+              <li>• Rapid repository exploration and mental mapping.</li>
+              <li>• Shell scripts, build commands, and pipeline debugging.</li>
+              <li>• Bounded changes reviewed directly in a git worktree.</li>
+              <li>• Immediate status and diff checking without IDE lag.</li>
+            </ul>
+            <div class="tool-prompt-snippet">
+              gh copilot explain "Explain how this request flows through the repo. Cite files. Do not edit anything yet."
+            </div>
+          </div>
+
+          <!-- IntelliJ -->
+          <div class="glass-card tool-card intellij">
+            <div class="tool-header">
+              <div class="tool-title">IntelliJ IDEA</div>
+              <span class="badge badge-purple">JVM ECOSYSTEM</span>
+            </div>
+            <ul class="tool-features">
+              <li>• Deep class hierarchies and collaborator analysis.</li>
+              <li>• Suggesting focused unit tests matching project idioms.</li>
+              <li>• Local inline suggestions for repetitive boilerplate.</li>
+              <li>• Validated in real-time by the compiler and inspections.</li>
+            </ul>
+            <div class="tool-prompt-snippet">
+              "Explain this class, its collaborators, and the assumptions its existing tests cover."
+            </div>
+          </div>
+
+          <!-- VS Code -->
+          <div class="glass-card tool-card vscode">
+            <div class="tool-header">
+              <div class="tool-title">VS Code</div>
+              <span class="badge badge-emerald">POLYGLOT & CONFIG</span>
+            </div>
+            <ul class="tool-features">
+              <li>• Multi-language microservices, scripts, and documentation.</li>
+              <li>• Docker, Kubernetes YAML, CI/CD workflow files.</li>
+              <li>• Scoped symbol lookups across workspace trees.</li>
+              <li>• Integrated terminal validation loops.</li>
+            </ul>
+            <div class="tool-prompt-snippet">
+              "Explain this config file, its dependencies, and settings affecting deployment. Do not edit."
+            </div>
+          </div>
+        </div>
+
+        <div class="slide4-dock">
+          <div><strong>Core Operational Rule:</strong> The interface changes; the discipline remains identical.</div>
+          <div class="badge badge-muted">Start Small • Provide Context • Inspect Result • Run Checks</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 5: The Repeatable Workflow
+         ======================================================== -->
+    <section class="slide" data-slide-index="4" data-slide-title="05. The Repeatable Workflow" data-steps="1" data-time="5:00–6:45">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <div class="section-eyebrow">OPERATIONAL STANDARD // THE CORE LOOP</div>
+          <h2 class="slide-headline">Context → Intent → <span class="highlight">Change → Proof</span></h2>
+          <p class="slide-lead">The four-stage loop for reliable engineering outcomes across any tool.</p>
+        </div>
+
+        <div class="loop-grid-4">
+          <!-- Card 01 -->
+          <div class="glass-card workflow-step-card c1">
+            <div class="step-badge-num">01</div>
+            <div class="step-card-title">CONTEXT</div>
+            <ul class="step-card-bullets">
+              <li>• <strong>Provide specific files:</strong> symbol names, error messages, and command outputs.</li>
+              <li>• <strong>State environment constraints:</strong> runtime versions, libraries, and protocols.</li>
+            </ul>
+            <div class="step-card-rule">Never assume the model knows which slice of the system matters.</div>
+          </div>
+
+          <!-- Card 02 -->
+          <div class="glass-card workflow-step-card c2">
+            <div class="step-badge-num">02</div>
+            <div class="step-card-title">INTENT</div>
+            <ul class="step-card-bullets">
+              <li>• <strong>Declare desired behavior:</strong> state what success looks like explicitly.</li>
+              <li>• <strong>Establish boundaries:</strong> say what may change, what must NOT change, and edit rights.</li>
+            </ul>
+            <div class="step-card-rule">Say what you mean—and what you do NOT mean.</div>
+          </div>
+
+          <!-- Card 03 -->
+          <div class="glass-card workflow-step-card c3">
+            <div class="step-badge-num">03</div>
+            <div class="step-card-title">CHANGE</div>
+            <ul class="step-card-bullets">
+              <li>• <strong>Ask for one focused edit:</strong> keep diffs small, isolated, and readable.</li>
+              <li>• <strong>Enforce existing patterns:</strong> reuse existing domain helpers and error handling.</li>
+            </ul>
+            <div class="step-card-rule">Broad prompts produce broad, unreviewable diffs.</div>
+          </div>
+
+          <!-- Card 04 -->
+          <div class="glass-card workflow-step-card c4">
+            <div class="step-badge-num">04</div>
+            <div class="step-card-title">PROOF</div>
+            <ul class="step-card-bullets">
+              <li>• <strong>Inspect the diff:</strong> verify every added or removed line manually.</li>
+              <li>• <strong>Run the checks:</strong> execute the smallest relevant unit test, build, or linter.</li>
+            </ul>
+            <div class="step-card-rule">Fluency is not proof. Automated checks establish trust.</div>
+          </div>
+        </div>
+
+        <div class="slide5-banner">
+          <span class="badge badge-emerald">ENGINEERING REALITY</span>
+          <span>This is not bureaucracy added around AI. It is the normal engineering discipline made explicit enough for an assistant to follow.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 6: Say What You Mean (Negative Constraints)
+         ======================================================== -->
+    <section class="slide" data-slide-index="5" data-slide-title="06. Boundary Language" data-steps="1" data-time="6:45–8:15">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <div class="section-eyebrow">PROMPT BOUNDARIES // NEGATIVE CONSTRAINTS</div>
+          <h2 class="slide-headline">Say What You Mean—<span class="highlight">And What You Do Not Mean</span></h2>
+          <p class="slide-lead">Boundary language protects your worktree from silent refactoring and scope creep.</p>
+        </div>
+
+        <div class="slide6-layout">
+          <!-- Terminal prompt card -->
+          <div class="terminal-window">
+            <div class="terminal-topbar">
+              <div class="window-dots">
+                <div class="window-dot dot-red"></div>
+                <div class="window-dot dot-yellow"></div>
+                <div class="window-dot dot-green"></div>
+              </div>
+              <div class="terminal-title">copilot-cli — prompt-with-boundaries</div>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-prompt-line">$ gh copilot suggest \</div>
+              <div class="terminal-str">
+                "Explain how this request flows through the repository.<br />
+                Identify the relevant files and tests.<br />
+                Do not edit anything yet."
+              </div>
+              <div class="terminal-tags-row">
+                <span class="badge badge-emerald">JOB: Flow Trace</span>
+                <span class="badge badge-cyan">SCOPE: Files & Tests</span>
+                <span class="badge badge-amber">BOUNDARY: No Edits</span>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.4;">
+                Notice: The prompt assigns a job, a concrete scope, an expected deliverable, and an absolute permission boundary. It explores without touching a single file.
+              </div>
+            </div>
+          </div>
+
+          <!-- Boundary Arsenal -->
+          <div class="boundaries-arsenal">
+            <div class="boundary-phrase-card">
+              <div class="phrase-quote">“Explain this; do not edit files.”</div>
+              <div class="phrase-desc">Zero-mutation guarantee. Allows safe exploration of critical production code.</div>
+            </div>
+
+            <div class="boundary-phrase-card">
+              <div class="phrase-quote">“Change only this behavior; do not refactor unrelated code.”</div>
+              <div class="phrase-desc">Blast-radius containment. Stops the model from reformatting or reorganizing imports.</div>
+            </div>
+
+            <div class="boundary-phrase-card">
+              <div class="phrase-quote">“Preserve the public API and existing error handling.”</div>
+              <div class="phrase-desc">Interface contract lock. Prevents subtle breaking changes across caller services.</div>
+            </div>
+
+            <div class="boundary-phrase-card">
+              <div class="phrase-quote">“List assumptions and open questions before implementing.”</div>
+              <div class="phrase-desc">Pre-flight alignment. Surfaces misunderstandings before lines of code are written.</div>
+            </div>
+
+            <div class="boundary-phrase-card danger">
+              <div class="phrase-quote">“Run the smallest relevant check and report what it verified.”</div>
+              <div class="phrase-desc">Accountable validation. Forces focus on the proof criteria rather than speculative claims.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 7: Model Choice Is A Tradeoff
+         ======================================================== -->
+    <section class="slide" data-slide-index="6" data-slide-title="07. Model Choice & Credit Stewardship" data-steps="1" data-time="8:15–9:30">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <div class="section-eyebrow">RESOURCE STEWARDSHIP // SHARED CREDITS</div>
+          <h2 class="slide-headline">Model Choice Is A Tradeoff, <span class="highlight">Not A Leaderboard</span></h2>
+          <p class="slide-lead">When organizational credits are shared, model selection is an engineering resource decision.</p>
+        </div>
+
+        <div class="models-grid">
+          <!-- Fast Models -->
+          <div class="glass-card model-col-card fast">
+            <div class="model-header-box">
+              <div>
+                <div class="model-type-title">Fast & Economical</div>
+                <div class="model-subnames">e.g., GPT-4o-mini / Claude Haiku / Flash</div>
+              </div>
+              <span class="badge badge-cyan">DEFAULT TIER</span>
+            </div>
+
+            <div class="model-metrics">
+              <div class="metric-item">
+                <span class="metric-label">Credit Cost</span>
+                <span class="metric-val" style="color: var(--accent);">Very Low (1x)</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Latency</span>
+                <span class="metric-val" style="color: var(--cyan);">Near-Instant</span>
+              </div>
+            </div>
+
+            <ul class="model-tasks-list">
+              <li>✔ Codebase navigation and file exploration</li>
+              <li>✔ Explaining classes, functions, and error messages</li>
+              <li>✔ Routine boilerplate, formatting, and docstrings</li>
+              <li>✔ Small, single-function edits and straightforward unit tests</li>
+              <li>✔ Rapid, multi-turn conversational questions</li>
+            </ul>
+          </div>
+
+          <!-- Capable Models -->
+          <div class="glass-card model-col-card capable">
+            <div class="model-header-box">
+              <div>
+                <div class="model-type-title">High Reasoning</div>
+                <div class="model-subnames">e.g., Claude 3.5 Sonnet / o1 / GPT-4o</div>
+              </div>
+              <span class="badge badge-purple">ESCALATION TIER</span>
+            </div>
+
+            <div class="model-metrics">
+              <div class="metric-item">
+                <span class="metric-label">Credit Cost</span>
+                <span class="metric-val" style="color: var(--amber);">High (10x–20x)</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Latency</span>
+                <span class="metric-val" style="color: var(--purple);">Deep Synthesis</span>
+              </div>
+            </div>
+
+            <ul class="model-tasks-list">
+              <li>✔ Multi-file architectural refactoring</li>
+              <li>✔ Unfamiliar legacy systems crossing domain boundaries</li>
+              <li>✔ Concurrency bugs, race conditions, and tricky edge-cases</li>
+              <li>✔ Tasks with heavily competing design constraints</li>
+              <li>✔ Deliberate escalation when lower tiers reach limits</li>
+            </ul>
+          </div>
+
+          <div class="slide7-rule-banner">
+            <div class="rule-banner-text">
+              ⚠️ A high-cost model cannot compensate for a vague prompt. Provide complete context first.
+            </div>
+            <div class="badge badge-amber">GOAL: OUTCOMES PER CREDIT</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 8: Fluent Does Not Mean Correct (Guardrails)
+         ======================================================== -->
+    <section class="slide" data-slide-index="7" data-slide-title="08. Fluent Does Not Mean Correct" data-steps="1" data-time="9:30–10:45">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <div class="section-eyebrow">RISK MITIGATION // NON-NEGOTIABLE GUARDRAILS</div>
+          <h2 class="slide-headline">Fluent Does Not Mean <span class="highlight">Correct</span></h2>
+          <p class="slide-lead">Guardrails we do not outsource. Fluency is not proof.</p>
+        </div>
+
+        <div class="guardrails-grid">
+          <div class="glass-card guardrail-card">
+            <div class="guardrail-header">
+              <span class="guardrail-title">Verify APIs & Types</span>
+              <span class="badge badge-muted">01</span>
+            </div>
+            <p class="guardrail-desc">
+              Models invent non-existent method signatures and parameters with complete syntactic confidence. Always verify against the actual source.
+            </p>
+          </div>
+
+          <div class="glass-card guardrail-card warn">
+            <div class="guardrail-header">
+              <span class="guardrail-title">Keep Diffs Reviewable</span>
+              <span class="badge badge-muted">02</span>
+            </div>
+            <p class="guardrail-desc">
+              Broad prompts produce sprawling diffs. If you cannot understand every changed line in 3 minutes, reject it and narrow the scope.
+            </p>
+          </div>
+
+          <div class="glass-card guardrail-card">
+            <div class="guardrail-header">
+              <span class="guardrail-title">Zero Secrets In Prompts</span>
+              <span class="badge badge-muted">03</span>
+            </div>
+            <p class="guardrail-desc">
+              Never paste API tokens, private keys, connection strings, customer PII, or unreleased proprietary specs into prompts.
+            </p>
+          </div>
+
+          <div class="glass-card guardrail-card warn">
+            <div class="guardrail-header">
+              <span class="guardrail-title">Review Terminal Commands</span>
+              <span class="badge badge-muted">04</span>
+            </div>
+            <p class="guardrail-desc">
+              Never blind-execute generated shell commands—especially operations involving <code style="color:var(--amber);">rm</code>, <code style="color:var(--amber);">git reset</code>, drop tables, or migrations.
+            </p>
+          </div>
+
+          <div class="glass-card guardrail-card accent">
+            <div class="guardrail-header">
+              <span class="guardrail-title">Retain Architecture Rights</span>
+              <span class="badge badge-muted">05</span>
+            </div>
+            <p class="guardrail-desc">
+              Do not let Copilot silently decide system architecture, security boundaries, or business domain rules. Those need accountable human ownership.
+            </p>
+          </div>
+
+          <div class="glass-card guardrail-card">
+            <div class="guardrail-header">
+              <span class="guardrail-title">Check For Silent Failures</span>
+              <span class="badge badge-muted">06</span>
+            </div>
+            <p class="guardrail-desc">
+              Watch for swallowed exceptions, empty catch blocks, fake mocks, and removed assertions generated just to make tests green.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide8-anchor-bar">
+          <span style="font-size: 1.1rem;">🚨</span>
+          <span><strong>The Golden Rule of Engineering Ownership:</strong> The model has no skin in the game. When a production incident fires at 02:00, the engineer answers the pager.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 9: Bounded Demo Workflow
+         ======================================================== -->
+    <section class="slide" data-slide-index="8" data-slide-title="09. Live Demo Workflow" data-steps="1" data-time="10:45–13:45">
+      <div class="slide-inner">
+        <div class="slide-header">
+          <div class="section-eyebrow">LIVE WORKFLOW // METHODOLOGY OVER LATENCY</div>
+          <h2 class="slide-headline">A Small Demo Beats A <span class="highlight">Giant Repository Tour</span></h2>
+          <p class="slide-lead">Applying the 4-step loop to a bounded slice of the repository live.</p>
+        </div>
+
+        <div class="demo-steps-grid">
+          <!-- Step 1 -->
+          <div class="demo-step-card active-stage">
+            <div class="demo-step-top">
+              <span class="badge badge-emerald">STEP 1</span>
+              <span class="badge badge-muted">ORIENT</span>
+            </div>
+            <div class="demo-step-name">Explore (No Edits)</div>
+            <div class="demo-prompt-box">
+              “Give me a concise map of this repo for a new engineer. Main services, entry points, tests. Cite files. Do not edit anything.”
+            </div>
+            <div class="demo-discipline-note">
+              <strong>Discipline:</strong> Request citations; explicitly prohibit edits; build mental model first.
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="demo-step-card">
+            <div class="demo-step-top">
+              <span class="badge badge-cyan">STEP 2</span>
+              <span class="badge badge-muted">TARGET</span>
+            </div>
+            <div class="demo-step-name">Target Narrow Gap</div>
+            <div class="demo-prompt-box">
+              “Based on that map, find one documentation gap that can be fixed without changing code. Propose smallest change. Do not edit until approved.”
+            </div>
+            <div class="demo-discipline-note">
+              <strong>Discipline:</strong> Decouple proposal from execution; hold the human approval gate.
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="demo-step-card">
+            <div class="demo-step-top">
+              <span class="badge badge-amber">STEP 3</span>
+              <span class="badge badge-muted">MUTATE</span>
+            </div>
+            <div class="demo-step-name">Make Approved Edit</div>
+            <div class="demo-prompt-box">
+              “Make only the approved documentation change. Preserve existing style. Do not touch source code or dependencies. Show concise diff.”
+            </div>
+            <div class="demo-discipline-note">
+              <strong>Discipline:</strong> Inspect git diff live: Did it touch only the approved file? Did it invent paths?
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="demo-step-card">
+            <div class="demo-step-top">
+              <span class="badge badge-purple">STEP 4</span>
+              <span class="badge badge-muted">VALIDATE</span>
+            </div>
+            <div class="demo-step-name">Prove The Result</div>
+            <div class="demo-prompt-box">
+              “Verify this documentation change using the smallest check. Inspect for broken Markdown and invalid paths. Report what you verified.”
+            </div>
+            <div class="demo-discipline-note">
+              <strong>Discipline:</strong> Validate claims with concrete checks before committing to the branch.
+            </div>
+          </div>
+        </div>
+
+        <div class="slide9-bottom-callout">
+          <div>💡 <strong>Key Takeaway:</strong> The value of the demo is the method, not model latency. Bounded requests produce reviewable outcomes.</div>
+          <div class="badge badge-muted">FALLBACK READY</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 10: Takeaways & David S. Pumpkins (5 discrete steps)
+         ======================================================== -->
+    <section class="slide" data-slide-index="9" data-slide-title="10. Keep The Power. Supply The Context." data-steps="5" data-time="13:45–15:00">
+      <div class="slide-inner">
+        <div class="slide10-wrapper">
+
+          <!-- Step 1-4: The Takeaways -->
+          <div id="slide10Takeaways" class="slide10-takeaways">
+            <div class="slide-header" style="text-align: center; align-items: center;">
+              <div class="section-eyebrow">FINAL SYNTHESIS // OPERATIONAL HABIT</div>
+              <h2 class="slide-headline">Keep The Power. <span class="highlight">Supply The Context.</span></h2>
+              <p class="slide-lead">Four non-negotiable principles for engineering leverage.</p>
+            </div>
+
+            <div class="takeaways-quad-grid">
+              <!-- Step 1 -->
+              <div class="glass-card takeaway-quad-card step-target" data-min-step="1">
+                <div class="quad-num">01</div>
+                <div class="quad-content">
+                  <div class="quad-title">Start small.</div>
+                  <div class="quad-desc">Focus on one class, one isolated script, or one bounded CLI query. Avoid sprawling repository scans.</div>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="glass-card takeaway-quad-card step-target" data-min-step="2">
+                <div class="quad-num" style="color: var(--cyan);">02</div>
+                <div class="quad-content">
+                  <div class="quad-title">State the boundaries.</div>
+                  <div class="quad-desc">Say what may change, what must NOT change, and editing permissions. Negative constraints preserve sanity.</div>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="glass-card takeaway-quad-card step-target" data-min-step="3">
+                <div class="quad-num" style="color: var(--amber);">03</div>
+                <div class="quad-content">
+                  <div class="quad-title">Review the result.</div>
+                  <div class="quad-desc">Line-by-line diff inspection. If you cannot explain every changed token, do not commit it.</div>
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="glass-card takeaway-quad-card step-target" data-min-step="4">
+                <div class="quad-num" style="color: var(--purple);">04</div>
+                <div class="quad-content">
+                  <div class="quad-title">Run the checks.</div>
+                  <div class="quad-desc">The compiler, linter, and unit test suite are the ultimate arbiters of truth. Trust is earned through execution.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide10-central-formula">
+              <div class="formula-tagline">
+                “Copilot is an engineer’s second set of eyes across a complicated system. It is not the person responsible for the result.”
+              </div>
+              <div class="hero-loop-bar" style="margin-top: 0.25rem;">
+                <span class="loop-node badge-emerald">CONTEXT</span>
+                <span class="loop-arrow">➔</span>
+                <span class="loop-node badge-cyan">INTENT</span>
+                <span class="loop-arrow">➔</span>
+                <span class="loop-node badge-amber">CHANGE</span>
+                <span class="loop-arrow">➔</span>
+                <span class="loop-node badge-purple">PROOF</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5: Grand Finale — David S. Pumpkins -->
+          <div id="slide10Pumpkins" class="slide10-pumpkins">
+            <div class="pumpkins-card">
+              <div class="pumpkins-media-frame">
+                <img src="any-questions-david-s-pumpkins.gif" alt="David S. Pumpkins Any Questions" />
+              </div>
+              <h2 class="pumpkins-title">ANY QUESTIONS?</h2>
+              <div class="pumpkins-catchphrase">
+                “And the skeletons are...?” <span>PART OF IT!</span>
+              </div>
+              <div class="pumpkins-reminder">
+                <span class="badge badge-emerald">CONTEXT</span>
+                <span style="color: var(--text-muted);">➔</span>
+                <span class="badge badge-cyan">INTENT</span>
+                <span style="color: var(--text-muted);">➔</span>
+                <span class="badge badge-amber">CHANGE</span>
+                <span style="color: var(--text-muted);">➔</span>
+                <span class="badge badge-purple">PROOF</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+                GitHub Copilot: From “AI is cool” to useful, repeatable engineering work.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Deck Footer -->
+  <footer class="deck-footer">
+    <div class="footer-left">
+      <span>SOVEREIGN RUST FLIGHT DECK</span>
+      <span style="color: var(--card-border);">|</span>
+      <span id="footerPacing" class="footer-center">0:00–0:45</span>
+    </div>
+
+    <div class="footer-right">
+      <span class="key-hint">Space / →</span> <span>Next</span>
+      <span class="key-hint">←</span> <span>Back</span>
+      <span class="key-hint">F</span> <span>Fullscreen</span>
+      <span class="key-hint">S</span> <span>Script</span>
+    </div>
+  </footer>
+
+  <!-- Vanilla Deck Controller JS -->
+  <script>
+    (function () {
+      'use strict';
+
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const totalSlides = slides.length;
+      let currentSlideIndex = 0;
+      let currentStep = 1;
+
+      // DOM Elements
+      const topProgressBar = document.getElementById('topProgressBar');
+      const activeSlideTitle = document.getElementById('activeSlideTitle');
+      const slideCounter = document.getElementById('slideCounter');
+      const stepIndicatorContainer = document.getElementById('stepIndicatorContainer');
+      const footerPacing = document.getElementById('footerPacing');
+      const btnPrev = document.getElementById('btnPrev');
+      const btnNext = document.getElementById('btnNext');
+      const btnFullscreen = document.getElementById('btnFullscreen');
+      const deckViewport = document.getElementById('deckViewport');
+
+      // Helper: get total steps for a given slide
+      function getSlideTotalSteps(slideEl) {
+        return parseInt(slideEl.getAttribute('data-steps') || '1', 10);
+      }
+
+      // Update UI for current slide and step
+      function updateView() {
+        const slideEl = slides[currentSlideIndex];
+        const totalSteps = getSlideTotalSteps(slideEl);
+
+        // 1. Activate Slide
+        slides.forEach((s, idx) => {
+          if (idx === currentSlideIndex) {
+            s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        // 2. Update Header Title & Counter
+        const titleText = slideEl.getAttribute('data-slide-title') || `Slide ${currentSlideIndex + 1}`;
+        activeSlideTitle.textContent = titleText;
+        slideCounter.textContent = `${String(currentSlideIndex + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+
+        // 3. Update Pacing Time in Footer
+        const pacingTime = slideEl.getAttribute('data-time') || '';
+        footerPacing.textContent = pacingTime ? `Session Window: ${pacingTime}` : '';
+
+        // 4. Update Step Indicators
+        if (totalSteps > 1) {
+          stepIndicatorContainer.style.display = 'flex';
+          stepIndicatorContainer.innerHTML = '';
+          for (let i = 1; i <= totalSteps; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'step-dot';
+            if (i < currentStep) dot.classList.add('passed');
+            if (i === currentStep) dot.classList.add('active');
+            stepIndicatorContainer.appendChild(dot);
+          }
+          const label = document.createElement('span');
+          label.className = 'step-label';
+          label.textContent = `Step ${currentStep} / ${totalSteps}`;
+          stepIndicatorContainer.appendChild(label);
+        } else {
+          stepIndicatorContainer.style.display = 'none';
+        }
+
+        // 5. Update Top Progress Bar
+        const stepProgress = (currentStep - 1) / Math.max(totalSteps, 1);
+        const overallPercent = ((currentSlideIndex + stepProgress) / (totalSlides - 1 || 1)) * 100;
+        topProgressBar.style.width = `${Math.min(Math.max(overallPercent, 3), 100)}%`;
+
+        // 6. Handle Slide-Specific Step Logic
+        handleSlideSteps(slideEl, currentSlideIndex, currentStep);
+      }
+
+      function handleSlideSteps(slideEl, slideIdx, step) {
+        // Slide 2: The Bass Hook
+        if (slideIdx === 1) {
+          const stepTargets = slideEl.querySelectorAll('.step-target');
+          stepTargets.forEach((el) => {
+            const minStep = parseInt(el.getAttribute('data-min-step') || '1', 10);
+            if (step >= minStep) {
+              el.classList.add('revealed');
+            } else {
+              el.classList.remove('revealed');
+            }
+          });
+
+          // Manage placeholder text for stages
+          const placeholder3 = document.getElementById('placeholderStep3');
+          const placeholder5 = document.getElementById('placeholderStep5');
+          if (placeholder3) {
+            if (step >= 3) placeholder3.classList.add('hidden');
+            else placeholder3.classList.remove('hidden');
+          }
+          if (placeholder5) {
+            if (step >= 5) placeholder5.classList.add('hidden');
+            else placeholder5.classList.remove('hidden');
+          }
+        }
+
+        // Slide 10: Final Takeaways & David S. Pumpkins
+        if (slideIdx === 9) {
+          const takeawaysBox = document.getElementById('slide10Takeaways');
+          const pumpkinsBox = document.getElementById('slide10Pumpkins');
+
+          // Reveal individual takeaway cards (steps 1..4)
+          const stepTargets = slideEl.querySelectorAll('.step-target');
+          stepTargets.forEach((el) => {
+            const minStep = parseInt(el.getAttribute('data-min-step') || '1', 10);
+            if (step >= minStep) {
+              el.classList.add('revealed');
+            } else {
+              el.classList.remove('revealed');
+            }
+          });
+
+          // Step 5: Fade out takeaways, fade in David S. Pumpkins
+          if (step >= 5) {
+            takeawaysBox.classList.add('hidden-finale');
+            pumpkinsBox.classList.add('visible-finale');
+          } else {
+            takeawaysBox.classList.remove('hidden-finale');
+            pumpkinsBox.classList.remove('visible-finale');
+          }
+        }
+      }
+
+      // Action: Advance one step or slide
+      function advance() {
+        const slideEl = slides[currentSlideIndex];
+        const totalSteps = getSlideTotalSteps(slideEl);
+
+        if (currentStep < totalSteps) {
+          currentStep++;
+          updateView();
+        } else if (currentSlideIndex < totalSlides - 1) {
+          currentSlideIndex++;
+          currentStep = 1;
+          updateView();
+        }
+      }
+
+      // Action: Backtrack one step or slide
+      function backtrack() {
+        if (currentStep > 1) {
+          currentStep--;
+          updateView();
+        } else if (currentSlideIndex > 0) {
+          currentSlideIndex--;
+          const prevSlide = slides[currentSlideIndex];
+          currentStep = getSlideTotalSteps(prevSlide); // Return to completed state of prev slide
+          updateView();
+        }
+      }
+
+      // Action: Jump directly to a slide
+      function goToSlide(index) {
+        if (index >= 0 && index < totalSlides) {
+          currentSlideIndex = index;
+          currentStep = 1;
+          updateView();
+        }
+      }
+
+      // Action: Toggle Fullscreen
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch((err) => {
+            console.warn(`Fullscreen request error: ${err.message}`);
+          });
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+        }
+      }
+
+      // Keyboard Listener
+      window.addEventListener('keydown', (e) => {
+        // Prevent default spacebar scroll
+        if (e.code === 'Space') {
+          e.preventDefault();
+          advance();
+          return;
+        }
+
+        switch (e.key) {
+          case 'ArrowRight':
+          case 'PageDown':
+            e.preventDefault();
+            advance();
+            break;
+          case 'ArrowLeft':
+          case 'PageUp':
+            e.preventDefault();
+            backtrack();
+            break;
+          case 'f':
+          case 'F':
+            e.preventDefault();
+            toggleFullscreen();
+            break;
+          case 's':
+          case 'S':
+            window.location.href = 'script.html';
+            break;
+          case 'Home':
+            e.preventDefault();
+            goToSlide(0);
+            break;
+          case 'End':
+            e.preventDefault();
+            goToSlide(totalSlides - 1);
+            break;
+          default:
+            // Number keys 1-9, 0 for slide 10
+            if (e.key >= '1' && e.key <= '9') {
+              goToSlide(parseInt(e.key, 10) - 1);
+            } else if (e.key === '0') {
+              goToSlide(9);
+            }
+            break;
+        }
+      });
+
+      // Button Listeners
+      btnNext.addEventListener('click', (e) => {
+        e.stopPropagation();
+        advance();
+      });
+
+      btnPrev.addEventListener('click', (e) => {
+        e.stopPropagation();
+        backtrack();
+      });
+
+      btnFullscreen.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFullscreen();
+      });
+
+      // Touch / Swipe Handling
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      deckViewport.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      deckViewport.addEventListener('touchend', (e) => {
+        if (e.changedTouches.length === 1) {
+          const deltaX = e.changedTouches[0].clientX - touchStartX;
+          const deltaY = e.changedTouches[0].clientY - touchStartY;
+          // Only trigger if horizontal swipe is greater than vertical movement and > 50px
+          if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+            if (deltaX < 0) {
+              advance(); // Swipe left -> Next
+            } else {
+              backtrack(); // Swipe right -> Back
+            }
+          }
+        }
+      }, { passive: true });
+
+      // Click on viewport margins to advance
+      deckViewport.addEventListener('click', (e) => {
+        // Do not trigger if clicking an interactive element
+        if (e.target.closest('button, a, input, code, pre')) return;
+        advance();
+      });
+
+      // Initial Render
+      updateView();
+
+    })();
+  </script>
+</body>
+</html>
